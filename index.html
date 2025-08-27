@@ -6,17 +6,15 @@
     <title>Tappy - Conecte-se aos Negócios Locais</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Mapbox GL JS -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'tappy-blue': '#1E90FF',
-                        'tappy-gold': '#FFD700',
-                        'tappy-gray': '#F5F5F5'
+                        'tappy-blue': '#1DA1F2',
+                        'tappy-orange': '#FFB703',
+                        'tappy-gray': '#F5F5F5',
+                        'tappy-dark': '#333333'
                     },
                     fontFamily: {
                         'poppins': ['Poppins', 'sans-serif']
@@ -145,16 +143,6 @@
             backdrop-filter: blur(5px);
         }
         
-        /* Estilos customizados para o Mapbox */
-        .mapboxgl-popup-content {
-            border-radius: 12px !important;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
-        }
-        
-        .mapboxgl-popup-tip {
-            border-top-color: white !important;
-        }
-        
         .business-marker {
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -167,115 +155,112 @@
         .user-marker {
             z-index: 1000;
         }
-        
-        /* Controles do mapa customizados */
-        .mapboxgl-ctrl-group {
-            border-radius: 12px !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-        }
-        
-        .mapboxgl-ctrl button {
-            border-radius: 8px !important;
-        }
     </style>
 </head>
 <body class="bg-white">
     <!-- Tela de Boas-Vindas -->
-    <div id="welcome-screen" class="min-h-screen gradient-bg flex flex-col items-center justify-center p-6 video-bg">
+    <div id="welcome-screen" class="min-h-screen bg-tappy-blue flex flex-col items-center justify-center p-6">
         <div class="text-center mb-12 fade-in">
             <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mb-6 mx-auto shadow-2xl hover-scale">
                 <span class="text-5xl font-bold text-tappy-blue">T</span>
             </div>
             <h1 class="text-6xl font-bold text-white mb-4 drop-shadow-lg">Tappy</h1>
             <p class="text-white text-xl opacity-90 font-light">Conecte-se aos negócios locais</p>
-            <p class="text-white text-sm opacity-75 mt-2">Descubra, compartilhe, conecte-se</p>
+            <p class="text-tappy-gray text-sm opacity-75 mt-2">Descubra, compartilhe, conecte-se</p>
         </div>
         
         <div class="w-full max-w-sm space-y-4">
-            <button onclick="showScreen('signup-screen')" class="w-full bg-tappy-gold text-gray-800 py-4 rounded-full font-semibold text-lg shadow-lg btn-hover">
+            <button onclick="showScreen('signup-screen')" class="w-full bg-tappy-orange text-white py-4 rounded-xl font-semibold text-lg shadow-lg btn-hover">
                 Criar Conta
             </button>
-            <button onclick="showScreen('login-screen')" class="w-full border-2 border-white text-white py-4 rounded-full font-semibold text-lg btn-hover hover:bg-white hover:text-tappy-blue">
+            <button onclick="showScreen('login-screen')" class="w-full border-2 border-white text-white py-4 rounded-xl font-semibold text-lg btn-hover hover:bg-white hover:text-tappy-blue">
                 Entrar
             </button>
         </div>
         
         <!-- Elementos decorativos animados -->
         <div class="absolute top-20 left-10 w-4 h-4 bg-white rounded-full opacity-30 animate-ping"></div>
-        <div class="absolute bottom-32 right-16 w-6 h-6 bg-tappy-gold rounded-full opacity-40 animate-bounce"></div>
+        <div class="absolute bottom-32 right-16 w-6 h-6 bg-tappy-orange rounded-full opacity-40 animate-bounce"></div>
         <div class="absolute top-1/3 right-8 w-3 h-3 bg-white rounded-full opacity-50 animate-pulse"></div>
     </div>
 
     <!-- Tela de Cadastro -->
-    <div id="signup-screen" class="hidden min-h-screen gradient-bg p-6">
+    <div id="signup-screen" class="hidden min-h-screen bg-tappy-blue p-6">
         <div class="max-w-md mx-auto">
-            <button onclick="showScreen('welcome-screen')" class="mb-6 text-white hover:text-tappy-gold transition-colors">
+            <button onclick="showScreen('welcome-screen')" class="mb-6 text-white hover:text-tappy-gray transition-colors">
                 ← Voltar
             </button>
-            <h2 class="text-3xl font-bold text-white mb-8 text-center">Criar Conta</h2>
             
-            <div class="bg-white rounded-3xl p-6 shadow-2xl zoom-in">
-                <div class="mb-6 text-center">
-                    <div class="w-24 h-24 bg-tappy-gray rounded-full mx-auto mb-4 flex items-center justify-center hover-scale cursor-pointer">
-                        <span class="text-gray-400 text-2xl">📷</span>
-                    </div>
-                    <button class="text-tappy-blue font-semibold hover:text-blue-600 transition-colors">Adicionar Foto</button>
+            <!-- Logo Tappy no topo -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span class="text-3xl font-bold text-tappy-blue">T</span>
                 </div>
-                
+                <h2 class="text-3xl font-bold text-white">Criar Conta</h2>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 shadow-2xl zoom-in">
                 <div class="space-y-4">
                     <div class="relative">
                         <span class="absolute left-4 top-4 text-gray-400">👤</span>
-                        <input type="text" placeholder="Nome completo" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                        <input type="text" placeholder="Nome completo" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                     </div>
                     <div class="relative">
                         <span class="absolute left-4 top-4 text-gray-400">📧</span>
-                        <input type="email" placeholder="E-mail" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                        <input type="email" placeholder="Digite seu e-mail" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                     </div>
                     <div class="relative">
                         <span class="absolute left-4 top-4 text-gray-400">🔒</span>
-                        <input type="password" placeholder="Senha" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                        <input type="password" placeholder="Crie uma senha" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                     </div>
-                    
-                    <button class="w-full flex items-center justify-center space-x-2 p-4 border-2 border-tappy-blue rounded-xl text-tappy-blue hover:bg-tappy-blue hover:text-white transition-all pulse-location">
-                        <span class="text-xl">📍</span>
-                        <span class="font-semibold">Usar minha localização</span>
-                    </button>
                 </div>
                 
-                <button onclick="showMainApp()" class="w-full bg-tappy-blue text-white py-4 rounded-xl font-semibold mt-6 btn-hover">
-                    Criar Conta
+                <button onclick="showMainApp()" class="w-full bg-tappy-orange text-white py-4 rounded-xl font-semibold mt-6 btn-hover">
+                    Cadastrar
                 </button>
+                
+                <p class="text-center text-tappy-dark mt-4">
+                    Já tenho conta? 
+                    <button onclick="showScreen('login-screen')" class="text-tappy-blue font-semibold hover:text-blue-600 transition-colors">Entrar</button>
+                </p>
             </div>
         </div>
     </div>
 
     <!-- Tela de Login -->
-    <div id="login-screen" class="hidden min-h-screen gradient-bg p-6">
+    <div id="login-screen" class="hidden min-h-screen bg-tappy-blue p-6">
         <div class="max-w-md mx-auto">
-            <button onclick="showScreen('welcome-screen')" class="mb-6 text-white hover:text-tappy-gold transition-colors">
+            <button onclick="showScreen('welcome-screen')" class="mb-6 text-white hover:text-tappy-gray transition-colors">
                 ← Voltar
             </button>
-            <h2 class="text-3xl font-bold text-white mb-8 text-center">Entrar</h2>
             
-            <div class="bg-white rounded-3xl p-6 shadow-2xl zoom-in">
+            <!-- Logo Tappy no topo -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span class="text-3xl font-bold text-tappy-blue">T</span>
+                </div>
+                <h2 class="text-3xl font-bold text-white">Entrar</h2>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 shadow-2xl zoom-in">
                 <div class="space-y-4">
                     <div class="relative">
                         <span class="absolute left-4 top-4 text-gray-400">📧</span>
-                        <input type="email" placeholder="E-mail" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                        <input type="email" placeholder="Digite seu e-mail" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                     </div>
                     <div class="relative">
                         <span class="absolute left-4 top-4 text-gray-400">🔒</span>
-                        <input type="password" placeholder="Senha" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                        <input type="password" placeholder="Digite sua senha" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                     </div>
                 </div>
                 
-                <button onclick="showMainApp()" class="w-full bg-tappy-blue text-white py-4 rounded-xl font-semibold mt-6 btn-hover">
+                <button onclick="showMainApp()" class="w-full bg-tappy-orange text-white py-4 rounded-xl font-semibold mt-6 btn-hover">
                     Entrar
                 </button>
                 
-                <p class="text-center text-gray-600 mt-4">
+                <p class="text-center text-tappy-dark mt-4">
                     Não tem conta? 
-                    <button onclick="showScreen('signup-screen')" class="text-tappy-blue font-semibold hover:text-blue-600 transition-colors">Criar agora</button>
+                    <button onclick="showScreen('signup-screen')" class="text-tappy-blue font-semibold hover:text-blue-600 transition-colors">Criar conta</button>
                 </p>
             </div>
         </div>
@@ -292,19 +277,19 @@
                     <span id="notification-icon">🔔</span>
                     <span id="notification-badge" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center hidden">3</span>
                 </button>
-                <div class="w-8 h-8 bg-gradient-to-r from-tappy-blue to-tappy-gold rounded-full hover-scale"></div>
+                <div class="w-8 h-8 bg-gradient-to-r from-tappy-blue to-tappy-orange rounded-full hover-scale"></div>
             </div>
         </header>
 
         <!-- Feed de Vídeos -->
-        <div id="feed-tab" class="tab-content pb-20">
+        <div id="feed-tab" class="tab-content hidden pb-20">
             <div class="space-y-0">
                 <!-- Vídeo 1 -->
                 <div class="bg-white shadow-lg">
                     <div class="flex items-center p-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-tappy-gold to-yellow-400 rounded-full mr-3 hover-scale"></div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-tappy-gold to-yellow-400 rounded-full mr-3 hover-scale cursor-pointer" onclick="showBusinessProfile('padaria')"></div>
                         <div class="flex-1">
-                            <h3 class="font-semibold">Padaria do João</h3>
+                            <h3 class="font-semibold cursor-pointer hover:text-tappy-blue transition-colors" onclick="showBusinessProfile('padaria')">Padaria do João</h3>
                             <p class="text-gray-500 text-sm">📍 500m • há 2 horas</p>
                         </div>
                         <button class="text-gray-400 hover:text-gray-600">⋯</button>
@@ -324,15 +309,15 @@
                         <p class="mb-4 text-gray-800">Nossos pães artesanais são feitos com ingredientes selecionados! 🍞✨ #PãoArtesanal #FrescoTodosDias</p>
                         <div class="flex items-center justify-between">
                             <div class="flex space-x-6">
-                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors like-btn">
+                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-tappy-dark hover:text-red-500 transition-colors like-btn">
                                     <span class="text-xl">🤍</span>
-                                    <span class="like-count">124</span>
+                                    <span class="like-count text-tappy-dark">124</span>
                                 </button>
-                                <button onclick="openComments()" class="flex items-center space-x-2 text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="openComments()" class="flex items-center space-x-2 text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">💬</span>
-                                    <span>12</span>
+                                    <span class="text-tappy-dark">12</span>
                                 </button>
-                                <button onclick="shareVideo()" class="text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="shareVideo()" class="text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">📤</span>
                                 </button>
                             </div>
@@ -344,9 +329,9 @@
                 <!-- Vídeo 2 -->
                 <div class="bg-white shadow-lg">
                     <div class="flex items-center p-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full mr-3 hover-scale"></div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full mr-3 hover-scale cursor-pointer" onclick="showBusinessProfile('manicure')"></div>
                         <div class="flex-1">
-                            <h3 class="font-semibold">Maria - Nail Designer</h3>
+                            <h3 class="font-semibold cursor-pointer hover:text-tappy-blue transition-colors" onclick="showBusinessProfile('manicure')">Maria - Nail Designer</h3>
                             <p class="text-gray-500 text-sm">📍 300m • há 1 hora</p>
                         </div>
                         <button class="text-gray-400 hover:text-gray-600">⋯</button>
@@ -365,15 +350,15 @@
                         <p class="mb-4 text-gray-800">Unhas decoradas com muito carinho e técnica! Agende seu horário 💅✨ #NailArt #UnhasDecoradas</p>
                         <div class="flex items-center justify-between">
                             <div class="flex space-x-6">
-                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors like-btn">
+                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-tappy-dark hover:text-red-500 transition-colors like-btn">
                                     <span class="text-xl">🤍</span>
-                                    <span class="like-count">89</span>
+                                    <span class="like-count text-tappy-dark">89</span>
                                 </button>
-                                <button onclick="openComments()" class="flex items-center space-x-2 text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="openComments()" class="flex items-center space-x-2 text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">💬</span>
-                                    <span>8</span>
+                                    <span class="text-tappy-dark">8</span>
                                 </button>
-                                <button onclick="shareVideo()" class="text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="shareVideo()" class="text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">📤</span>
                                 </button>
                             </div>
@@ -385,9 +370,9 @@
                 <!-- Vídeo 3 -->
                 <div class="bg-white shadow-lg">
                     <div class="flex items-center p-4">
-                        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-400 rounded-full mr-3 hover-scale"></div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-400 rounded-full mr-3 hover-scale cursor-pointer" onclick="showBusinessProfile('cafe')"></div>
                         <div class="flex-1">
-                            <h3 class="font-semibold">Café da Esquina</h3>
+                            <h3 class="font-semibold cursor-pointer hover:text-tappy-blue transition-colors" onclick="showBusinessProfile('cafe')">Café da Esquina</h3>
                             <p class="text-gray-500 text-sm">📍 800m • há 30 min</p>
                         </div>
                         <button class="text-gray-400 hover:text-gray-600">⋯</button>
@@ -406,15 +391,15 @@
                         <p class="mb-4 text-gray-800">O café mais cremoso da região! Venha experimentar nosso latte especial ☕️❤️ #LatteArt #CaféEspecial</p>
                         <div class="flex items-center justify-between">
                             <div class="flex space-x-6">
-                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors like-btn">
+                                <button onclick="likeVideo(this)" class="flex items-center space-x-2 text-tappy-dark hover:text-red-500 transition-colors like-btn">
                                     <span class="text-xl">🤍</span>
-                                    <span class="like-count">156</span>
+                                    <span class="like-count text-tappy-dark">156</span>
                                 </button>
-                                <button onclick="openComments()" class="flex items-center space-x-2 text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="openComments()" class="flex items-center space-x-2 text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">💬</span>
-                                    <span>23</span>
+                                    <span class="text-tappy-dark">23</span>
                                 </button>
-                                <button onclick="shareVideo()" class="text-gray-600 hover:text-tappy-blue transition-colors">
+                                <button onclick="shareVideo()" class="text-tappy-dark hover:text-tappy-blue transition-colors">
                                     <span class="text-xl">📤</span>
                                 </button>
                             </div>
@@ -426,10 +411,12 @@
         </div>
 
         <!-- Mapa de Negócios -->
-        <div id="map-tab" class="tab-content hidden pb-20">
+        <div id="map-tab" class="tab-content pb-20">
             <div class="h-screen relative">
-                <!-- Container do Mapbox -->
-                <div id="mapbox-container" class="w-full h-full"></div>
+                <!-- Container do Mapa -->
+                <div id="mapbox-container" class="w-full h-full">
+                    <!-- Mapa será criado aqui -->
+                </div>
                 
                 <!-- Card lateral do negócio -->
                 <div id="business-card" class="hidden absolute bottom-20 left-4 right-4 bg-white rounded-2xl p-6 shadow-2xl slide-in-right z-10">
@@ -458,58 +445,48 @@
                         <span class="flex items-center"><span class="mr-2">🛍️</span>Lojas</span>
                     </div>
                 </div>
-                
-                <!-- Loading do mapa -->
-                <div id="map-loading" class="absolute inset-0 bg-white flex items-center justify-center z-20">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-tappy-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                            <span class="text-white text-2xl">🗺️</span>
-                        </div>
-                        <p class="text-gray-600">Carregando mapa...</p>
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- Upload de Vídeo -->
         <div id="upload-tab" class="tab-content hidden pb-20">
             <div class="p-6">
-                <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Criar Vídeo</h2>
+                <h2 class="text-2xl font-bold mb-6 text-center text-tappy-dark">Criar Vídeo</h2>
                 
-                <div class="bg-white rounded-3xl p-6 shadow-lg">
-                    <div class="video-container bg-tappy-gray rounded-2xl flex items-center justify-center mb-6 cursor-pointer hover-scale">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="video-container bg-tappy-gray rounded-xl flex items-center justify-center mb-6 cursor-pointer hover-scale">
                         <div class="text-center">
                             <div class="w-20 h-20 bg-tappy-blue rounded-full flex items-center justify-center mx-auto mb-4 camera-bounce">
                                 <span class="text-white text-3xl">📹</span>
                             </div>
-                            <p class="text-gray-600 mb-4 font-medium">Toque para gravar seu vídeo</p>
-                            <button class="bg-tappy-blue text-white px-8 py-3 rounded-full font-semibold btn-hover">Gravar Vídeo</button>
+                            <p class="text-tappy-dark mb-4 font-medium">Toque para gravar seu vídeo</p>
+                            <button class="bg-tappy-blue text-white px-8 py-3 rounded-xl font-semibold btn-hover">Gravar Vídeo</button>
                         </div>
                     </div>
                     
                     <div class="space-y-4">
                         <div class="relative">
                             <span class="absolute left-4 top-4 text-gray-400">📝</span>
-                            <input type="text" placeholder="Título do vídeo" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none transition-colors">
+                            <input type="text" placeholder="Título do vídeo" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none transition-colors">
                         </div>
                         <div class="relative">
                             <span class="absolute left-4 top-4 text-gray-400">💭</span>
-                            <textarea placeholder="Descrição..." rows="3" class="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:border-tappy-blue focus:outline-none resize-none transition-colors"></textarea>
+                            <textarea placeholder="Descrição..." rows="3" class="w-full pl-12 pr-4 py-4 bg-white border border-tappy-gray rounded-xl text-tappy-dark focus:border-tappy-blue focus:outline-none resize-none transition-colors"></textarea>
                         </div>
                         
-                        <div class="flex items-center space-x-2 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-tappy-blue transition-colors">
+                        <div class="flex items-center space-x-2 p-4 border border-tappy-gray rounded-xl cursor-pointer hover:border-tappy-blue transition-colors">
                             <span class="text-xl">📍</span>
-                            <span class="text-gray-600 flex-1">São Paulo, SP - Brasil</span>
+                            <span class="text-tappy-dark flex-1">São Paulo, SP - Brasil</span>
                             <span class="text-tappy-blue text-sm">Alterar</span>
                         </div>
                         
-                        <div class="flex items-center space-x-2 p-4 border border-gray-200 rounded-xl">
+                        <div class="flex items-center space-x-2 p-4 border border-tappy-gray rounded-xl">
                             <span class="text-xl">🏷️</span>
-                            <input type="text" placeholder="Adicionar tags..." class="flex-1 outline-none">
+                            <input type="text" placeholder="Adicionar tags..." class="flex-1 outline-none text-tappy-dark">
                         </div>
                     </div>
                     
-                    <button class="w-full bg-tappy-gold text-gray-800 py-4 rounded-xl font-semibold mt-6 btn-hover">
+                    <button class="w-full bg-tappy-orange text-white py-4 rounded-xl font-semibold mt-6 btn-hover">
                         Publicar Vídeo
                     </button>
                 </div>
@@ -518,40 +495,40 @@
 
         <!-- Perfil do Usuário -->
         <div id="profile-tab" class="tab-content hidden pb-20">
-            <div class="bg-gradient-to-b from-tappy-blue to-tappy-gold p-6 text-white">
+            <div class="bg-tappy-blue p-6 text-white">
                 <div class="text-center">
                     <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 hover-scale"></div>
-                    <h2 class="text-2xl font-bold">Ana Silva</h2>
-                    <p class="opacity-90 mb-2">@anasilva</p>
-                    <p class="opacity-80 text-sm mb-4">Amante de negócios locais e descobertas incríveis! 🏪✨</p>
+                    <h2 class="text-2xl font-bold text-white">Ana Silva</h2>
+                    <p class="text-tappy-gray mb-2">@anasilva</p>
+                    <p class="text-tappy-gray text-sm mb-4">Amante de negócios locais e descobertas incríveis! 🏪✨</p>
                     
                     <div class="flex justify-center space-x-8 mb-6">
                         <div class="text-center">
-                            <div class="text-xl font-bold">12</div>
-                            <div class="text-sm opacity-80">Vídeos</div>
+                            <div class="text-xl font-bold text-white">12</div>
+                            <div class="text-sm text-tappy-gray">Vídeos</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-xl font-bold">1.2k</div>
-                            <div class="text-sm opacity-80">Seguidores</div>
+                            <div class="text-xl font-bold text-white">1.2k</div>
+                            <div class="text-sm text-tappy-gray">Seguidores</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-xl font-bold">890</div>
-                            <div class="text-sm opacity-80">Seguindo</div>
+                            <div class="text-xl font-bold text-white">890</div>
+                            <div class="text-sm text-tappy-gray">Seguindo</div>
                         </div>
                     </div>
                     
-                    <button class="bg-white text-tappy-blue px-8 py-3 rounded-full font-semibold btn-hover">Editar Perfil</button>
+                    <button class="bg-tappy-orange text-white px-8 py-3 rounded-xl font-semibold btn-hover">Editar Perfil</button>
                 </div>
             </div>
             
             <div class="p-6">
                 <div class="flex space-x-4 mb-6">
                     <button class="flex-1 bg-tappy-blue text-white py-3 rounded-xl font-semibold">Meus Vídeos</button>
-                    <button class="flex-1 bg-gray-200 text-gray-600 py-3 rounded-xl font-semibold">Curtidos</button>
+                    <button class="flex-1 bg-tappy-gray text-tappy-dark py-3 rounded-xl font-semibold">Curtidos</button>
                 </div>
                 
                 <div class="grid grid-cols-3 gap-2">
-                    <div class="aspect-square bg-gradient-to-br from-tappy-blue to-tappy-gold rounded-lg hover-scale cursor-pointer"></div>
+                    <div class="aspect-square bg-gradient-to-br from-tappy-blue to-tappy-orange rounded-lg hover-scale cursor-pointer"></div>
                     <div class="aspect-square bg-gradient-to-br from-pink-400 to-purple-400 rounded-lg hover-scale cursor-pointer"></div>
                     <div class="aspect-square bg-gradient-to-br from-green-400 to-blue-400 rounded-lg hover-scale cursor-pointer"></div>
                     <div class="aspect-square bg-gradient-to-br from-orange-400 to-red-400 rounded-lg hover-scale cursor-pointer"></div>
@@ -564,11 +541,11 @@
         <!-- Navegação Inferior -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2 z-50">
             <div class="flex justify-around">
-                <button onclick="showTab('feed')" class="tab-btn flex flex-col items-center py-2 text-tappy-blue">
+                <button onclick="showTab('feed')" class="tab-btn flex flex-col items-center py-2 text-gray-400">
                     <span class="text-2xl mb-1">🏠</span>
                     <span class="text-xs font-medium">Feed</span>
                 </button>
-                <button onclick="showTab('map')" class="tab-btn flex flex-col items-center py-2 text-gray-400">
+                <button onclick="showTab('map')" class="tab-btn flex flex-col items-center py-2 text-tappy-blue">
                     <span class="text-2xl mb-1">🗺️</span>
                     <span class="text-xs font-medium">Mapa</span>
                 </button>
@@ -758,862 +735,8 @@
     </div>
 
     <script>
-        // ===== SISTEMA DE RECOMENDAÇÃO INTELIGENTE TAPPY =====
-        // Sistema avançado de recomendação personalizada de vídeos
-        
-        // 1. ESTRUTURA DE BANCO DE DADOS COMPLETA
-        let database = {
-            usuarios: [
-                {
-                    id: 1,
-                    nome: "Ana Silva",
-                    localizacao_atual: [-46.6333, -23.5505],
-                    historico_locais: [
-                        { coordenadas: [-46.6333, -23.5505], timestamp: new Date('2024-01-10'), categoria: 'centro' },
-                        { coordenadas: [-46.6320, -23.5490], timestamp: new Date('2024-01-12'), categoria: 'padaria' },
-                        { coordenadas: [-46.6340, -23.5520], timestamp: new Date('2024-01-14'), categoria: 'beleza' }
-                    ],
-                    preferencias: {
-                        categorias: ["padaria", "cafe", "beleza"],
-                        tags_preferidas: ["artesanal", "fresh", "qualidade", "atendimento"],
-                        horarios_ativos: ["08:00-12:00", "18:00-22:00"]
-                    },
-                    pontuacao_afinidade: {
-                        padaria: 0.9,
-                        cafe: 0.8,
-                        beleza: 0.95,
-                        restaurante: 0.3,
-                        moda: 0.6
-                    },
-                    data_cadastro: new Date('2024-01-08'),
-                    historico_interacoes: [
-                        { video_id: 1, tipo: 'curtida', timestamp: new Date('2024-01-15T10:30:00'), tempo_assistido: 25 },
-                        { video_id: 2, tipo: 'comentario', timestamp: new Date('2024-01-15T11:15:00'), tempo_assistido: 20 },
-                        { video_id: 3, tipo: 'compartilhamento', timestamp: new Date('2024-01-15T12:00:00'), tempo_assistido: 18 }
-                    ],
-                    configuracoes_algoritmo: {
-                        limite_distancia: 5,
-                        peso_localizacao: 0.8,
-                        peso_afinidade: 0.2,
-                        modo_fallback: false
-                    }
-                },
-                {
-                    id: 2,
-                    nome: "Carlos Santos",
-                    localizacao_atual: [-46.6350, -23.5510],
-                    historico_localizacoes: [[-46.6350, -23.5510], [-46.6310, -23.5480]],
-                    categorias_preferidas: ["cafe", "restaurante"],
-                    historico_checkins: [2],
-                    historico_interacoes: [2, 3]
-                },
-                {
-                    id: 3,
-                    nome: "Mariana Costa",
-                    localizacao_atual: [-46.6300, -23.5470],
-                    historico_localizacoes: [[-46.6300, -23.5470], [-46.6340, -23.5520]],
-                    categorias_preferidas: ["beleza", "moda"],
-                    historico_checkins: [2, 3],
-                    historico_interacoes: [1, 3]
-                },
-                {
-                    id: 4,
-                    nome: "João Oliveira",
-                    localizacao_atual: [-46.6380, -23.5530],
-                    historico_localizacoes: [[-46.6380, -23.5530], [-46.6320, -23.5490]],
-                    categorias_preferidas: ["padaria", "mercado"],
-                    historico_checkins: [1],
-                    historico_interacoes: [1]
-                },
-                {
-                    id: 5,
-                    nome: "Sofia Lima",
-                    localizacao_atual: [-46.6290, -23.5460],
-                    historico_localizacoes: [[-46.6290, -23.5460], [-46.6310, -23.5480]],
-                    categorias_preferidas: ["cafe", "livraria"],
-                    historico_checkins: [3],
-                    historico_interacoes: [2, 3]
-                }
-            ],
-            
-            videos: [
-                {
-                    id: 1,
-                    titulo: "Pães frescos saindo do forno!",
-                    descricao: "Nossos pães artesanais são feitos com ingredientes selecionados!",
-                    localizacao: [-46.6320, -23.5490],
-                    categoria: "padaria",
-                    curtidas: 124,
-                    visualizacoes: 1250,
-                    comentarios: 12,
-                    compartilhamentos: 8,
-                    tags: ["artesanal", "fresh", "padaria", "qualidade", "tradicional"],
-                    tempo_medio_visualizacao: 15,
-                    tempo_total_video: 30,
-                    data_publicacao: new Date('2024-01-15T10:00:00'),
-                    empresa_id: 1,
-                    engajamento_score: 0.85,
-                    qualidade_score: 0.92
-                },
-                {
-                    id: 2,
-                    titulo: "Nail art incrível em processo!",
-                    descricao: "Unhas decoradas com muito carinho e técnica!",
-                    localizacao: [-46.6340, -23.5520],
-                    categoria: "beleza",
-                    curtidas: 89,
-                    visualizacoes: 890,
-                    comentarios: 8,
-                    compartilhamentos: 5,
-                    tags: ["nail art", "beleza", "decoracao", "tecnica", "criatividade"],
-                    tempo_medio_visualizacao: 20,
-                    tempo_total_video: 25,
-                    data_publicacao: new Date('2024-01-15T11:00:00'),
-                    empresa_id: 2,
-                    engajamento_score: 0.78,
-                    qualidade_score: 0.88
-                },
-                {
-                    id: 3,
-                    titulo: "Latte art em ação!",
-                    descricao: "O café mais cremoso da região!",
-                    localizacao: [-46.6310, -23.5480],
-                    categoria: "cafe",
-                    curtidas: 156,
-                    visualizacoes: 1560,
-                    comentarios: 23,
-                    compartilhamentos: 12,
-                    tags: ["latte art", "cafe", "cremoso", "qualidade", "barista"],
-                    tempo_medio_visualizacao: 18,
-                    tempo_total_video: 22,
-                    data_publicacao: new Date('2024-01-15T12:00:00'),
-                    empresa_id: 3,
-                    engajamento_score: 0.91,
-                    qualidade_score: 0.89
-                },
-                {
-                    id: 4,
-                    titulo: "Pizza artesanal no forno a lenha",
-                    descricao: "Massa fermentada por 48h, ingredientes premium",
-                    localizacao: [-46.6360, -23.5540],
-                    categoria: "restaurante",
-                    curtidas: 203,
-                    visualizacoes: 2030,
-                    comentarios: 31,
-                    compartilhamentos: 18,
-                    tags: ["pizza", "artesanal", "forno lenha", "premium", "tradicional"],
-                    tempo_medio_visualizacao: 25,
-                    tempo_total_video: 35,
-                    data_publicacao: new Date('2024-01-15T13:00:00'),
-                    empresa_id: 4,
-                    engajamento_score: 0.94,
-                    qualidade_score: 0.96
-                },
-                {
-                    id: 5,
-                    titulo: "Corte masculino moderno",
-                    descricao: "Técnicas avançadas de barbearia",
-                    localizacao: [-46.6280, -23.5450],
-                    categoria: "beleza",
-                    curtidas: 67,
-                    visualizacoes: 670,
-                    comentarios: 9,
-                    compartilhamentos: 4,
-                    tags: ["corte", "masculino", "moderno", "barbearia", "estilo"],
-                    tempo_medio_visualizacao: 12,
-                    tempo_total_video: 28,
-                    data_publicacao: new Date('2024-01-15T14:00:00'),
-                    empresa_id: 5,
-                    engajamento_score: 0.65,
-                    qualidade_score: 0.72
-                },
-                {
-                    id: 6,
-                    titulo: "Doces caseiros irresistíveis",
-                    descricao: "Brigadeiros gourmet e bolos personalizados",
-                    localizacao: [-46.6330, -23.5500],
-                    categoria: "doces",
-                    curtidas: 145,
-                    visualizacoes: 1450,
-                    comentarios: 19,
-                    compartilhamentos: 11,
-                    tags: ["doces", "caseiro", "brigadeiro", "gourmet", "personalizado"],
-                    tempo_medio_visualizacao: 16,
-                    tempo_total_video: 20,
-                    data_publicacao: new Date('2024-01-15T15:00:00'),
-                    empresa_id: 6,
-                    engajamento_score: 0.82,
-                    qualidade_score: 0.85
-                },
-                {
-                    id: 7,
-                    titulo: "Flores frescas para decoração",
-                    descricao: "Arranjos personalizados para todos os eventos",
-                    localizacao: [-46.6370, -23.5550],
-                    categoria: "floricultura",
-                    curtidas: 92,
-                    visualizacoes: 920,
-                    comentarios: 14,
-                    compartilhamentos: 7,
-                    tags: ["flores", "decoracao", "arranjos", "eventos", "personalizado"],
-                    tempo_medio_visualizacao: 13,
-                    tempo_total_video: 18,
-                    data_publicacao: new Date('2024-01-15T16:00:00'),
-                    empresa_id: 7,
-                    engajamento_score: 0.71,
-                    qualidade_score: 0.78
-                },
-                {
-                    id: 8,
-                    titulo: "Smoothie detox energizante",
-                    descricao: "Ingredientes orgânicos para sua saúde",
-                    localizacao: [-46.6290, -23.5470],
-                    categoria: "saude",
-                    curtidas: 178,
-                    visualizacoes: 1780,
-                    comentarios: 26,
-                    compartilhamentos: 15,
-                    tags: ["smoothie", "detox", "organico", "saude", "energia"],
-                    tempo_medio_visualizacao: 21,
-                    tempo_total_video: 24,
-                    data_publicacao: new Date('2024-01-15T17:00:00'),
-                    empresa_id: 8,
-                    engajamento_score: 0.87,
-                    qualidade_score: 0.91
-                },
-                {
-                    id: 9,
-                    titulo: "Roupas vintage únicas",
-                    descricao: "Peças exclusivas dos anos 80 e 90",
-                    localizacao: [-46.6350, -23.5530],
-                    categoria: "moda",
-                    curtidas: 134,
-                    visualizacoes: 1340,
-                    comentarios: 17,
-                    compartilhamentos: 9,
-                    tags: ["vintage", "moda", "exclusivo", "retro", "estilo"],
-                    tempo_medio_visualizacao: 19,
-                    tempo_total_video: 26,
-                    data_publicacao: new Date('2024-01-15T18:00:00'),
-                    empresa_id: 9,
-                    engajamento_score: 0.79,
-                    qualidade_score: 0.83
-                },
-                {
-                    id: 10,
-                    titulo: "Livros raros e antiguidades",
-                    descricao: "Coleção especial de primeiras edições",
-                    localizacao: [-46.6320, -23.5510],
-                    categoria: "livraria",
-                    curtidas: 76,
-                    visualizacoes: 760,
-                    comentarios: 11,
-                    compartilhamentos: 6,
-                    tags: ["livros", "raros", "antiguidades", "colecao", "edicoes"],
-                    tempo_medio_visualizacao: 14,
-                    tempo_total_video: 30,
-                    data_publicacao: new Date('2024-01-15T19:00:00'),
-                    empresa_id: 10,
-                    engajamento_score: 0.68,
-                    qualidade_score: 0.75
-                },
-                // Vídeos adicionais para sistema de fallback
-                {
-                    id: 11,
-                    titulo: "Hambúrguer artesanal premium",
-                    descricao: "Carne angus, pão brioche e molhos especiais",
-                    localizacao: [-46.6400, -23.5600],
-                    categoria: "restaurante",
-                    curtidas: 298,
-                    visualizacoes: 2980,
-                    comentarios: 45,
-                    compartilhamentos: 23,
-                    tags: ["hamburguer", "artesanal", "premium", "angus", "gourmet"],
-                    tempo_medio_visualizacao: 28,
-                    tempo_total_video: 32,
-                    data_publicacao: new Date('2024-01-14T19:00:00'),
-                    empresa_id: 11,
-                    engajamento_score: 0.97,
-                    qualidade_score: 0.95
-                },
-                {
-                    id: 12,
-                    titulo: "Yoga matinal no parque",
-                    descricao: "Aulas ao ar livre para começar bem o dia",
-                    localizacao: [-46.6250, -23.5400],
-                    categoria: "saude",
-                    curtidas: 189,
-                    visualizacoes: 1890,
-                    comentarios: 34,
-                    compartilhamentos: 19,
-                    tags: ["yoga", "matinal", "parque", "ar livre", "bem estar"],
-                    tempo_medio_visualizacao: 22,
-                    tempo_total_video: 25,
-                    data_publicacao: new Date('2024-01-14T07:00:00'),
-                    empresa_id: 12,
-                    engajamento_score: 0.88,
-                    qualidade_score: 0.86
-                }
-            ],
-            
-            empresas: [
-                {
-                    id: 1,
-                    nome: "Padaria do João",
-                    categoria: "padaria",
-                    localizacao: [-46.6320, -23.5490],
-                    avaliacoes: 127,
-                    media_avaliacao: 4.8,
-                    avaliacoes_com_foto: 89
-                },
-                {
-                    id: 2,
-                    nome: "Maria - Nail Designer",
-                    categoria: "beleza",
-                    localizacao: [-46.6340, -23.5520],
-                    avaliacoes: 94,
-                    media_avaliacao: 4.9,
-                    avaliacoes_com_foto: 76
-                },
-                {
-                    id: 3,
-                    nome: "Café da Esquina",
-                    categoria: "cafe",
-                    localizacao: [-46.6310, -23.5480],
-                    avaliacoes: 203,
-                    media_avaliacao: 4.7,
-                    avaliacoes_com_foto: 145
-                },
-                {
-                    id: 4,
-                    nome: "Pizzaria Nonna",
-                    categoria: "restaurante",
-                    localizacao: [-46.6360, -23.5540],
-                    avaliacoes: 156,
-                    media_avaliacao: 4.6,
-                    avaliacoes_com_foto: 98
-                },
-                {
-                    id: 5,
-                    nome: "Barbearia Moderna",
-                    categoria: "beleza",
-                    localizacao: [-46.6280, -23.5450],
-                    avaliacoes: 78,
-                    media_avaliacao: 4.5,
-                    avaliacoes_com_foto: 52
-                }
-            ]
-        };
-        
-        // Usuário atual (simulado)
-        let usuarioAtual = database.usuarios[0]; // Ana Silva
-        
-        // 2. VARIÁVEIS DO SISTEMA DE RECOMENDAÇÃO
-        let sistemaRecomendacao = {
-            distanciaUsuario: 0,
-            afinidadeUsuario: 0,
-            tempoUso: 0,
-            pesoLocalizacao: 0.8,
-            pesoAfinidade: 0.2,
-            limiteDistancia: 5,
-            modoFallback: false,
-            videosMinimos: 20
-        };
-        
-        // 3. FUNÇÕES PRINCIPAIS DO SISTEMA DE RECOMENDAÇÃO
-        
-        // Calcular distância entre duas coordenadas (em km)
-        function calcularDistancia(coord1, coord2) {
-            const R = 6371; // Raio da Terra em km
-            const dLat = (coord2[1] - coord1[1]) * Math.PI / 180;
-            const dLon = (coord2[0] - coord1[0]) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(coord1[1] * Math.PI / 180) * Math.cos(coord2[1] * Math.PI / 180) *
-                    Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-        
-        // Calcular tempo de uso do usuário (em dias)
-        function calcularTempoUso(usuario) {
-            const agora = new Date();
-            const cadastro = usuario.data_cadastro;
-            const diffTime = Math.abs(agora - cadastro);
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        }
-        
-        // Atualizar pesos baseado no tempo de uso
-        function atualizarPesos(usuario) {
-            const tempoUso = calcularTempoUso(usuario);
-            sistemaRecomendacao.tempoUso = tempoUso;
-            
-            if (tempoUso <= 7) {
-                // Primeira semana: priorizar localização
-                const progressao = Math.min(tempoUso / 5, 1); // Progressão até o 5º dia
-                sistemaRecomendacao.pesoLocalizacao = 0.8 - (progressao * 0.3); // 0.8 -> 0.5
-                sistemaRecomendacao.pesoAfinidade = 0.2 + (progressao * 0.3); // 0.2 -> 0.5
-                sistemaRecomendacao.limiteDistancia = 5;
-            } else {
-                // Após primeira semana: equilibrar localização e afinidade
-                sistemaRecomendacao.pesoLocalizacao = 0.5;
-                sistemaRecomendacao.pesoAfinidade = 0.5;
-                sistemaRecomendacao.limiteDistancia = 10; // Expandir raio
-            }
-            
-            // Atualizar configurações do usuário
-            usuario.configuracoes_algoritmo.peso_localizacao = sistemaRecomendacao.pesoLocalizacao;
-            usuario.configuracoes_algoritmo.peso_afinidade = sistemaRecomendacao.pesoAfinidade;
-            usuario.configuracoes_algoritmo.limite_distancia = sistemaRecomendacao.limiteDistancia;
-        }
-        
-        // Calcular afinidade do usuário com um vídeo
-        function calcularAfinidadeUsuario(video, usuario) {
-            let afinidade = 0;
-            
-            // 1. Afinidade por categoria (peso 40%)
-            const afinidadeCategoria = usuario.pontuacao_afinidade[video.categoria] || 0;
-            afinidade += afinidadeCategoria * 0.4;
-            
-            // 2. Afinidade por tags (peso 30%)
-            let tagsComuns = 0;
-            video.tags.forEach(tag => {
-                if (usuario.preferencias.tags_preferidas.includes(tag)) {
-                    tagsComuns++;
-                }
-            });
-            const afinidadeTags = Math.min(tagsComuns / video.tags.length, 1);
-            afinidade += afinidadeTags * 0.3;
-            
-            // 3. Histórico de interações (peso 20%)
-            const interagiu = usuario.historico_interacoes.some(inter => inter.video_id === video.id);
-            if (interagiu) {
-                afinidade += 0.2;
-            }
-            
-            // 4. Qualidade e engajamento do vídeo (peso 10%)
-            const qualidadeMedia = (video.engajamento_score + video.qualidade_score) / 2;
-            afinidade += qualidadeMedia * 0.1;
-            
-            return Math.min(afinidade, 1); // Limitar a 1
-        }
-        
-        // Fórmula principal de pontuação
-        function calcularPontuacaoRecomendacao(video, usuario) {
-            const distancia = calcularDistancia(usuario.localizacao_atual, video.localizacao);
-            sistemaRecomendacao.distanciaUsuario = distancia;
-            
-            // Se estiver fora do limite de distância e não for modo fallback, retornar 0
-            if (distancia > sistemaRecomendacao.limiteDistancia && !sistemaRecomendacao.modoFallback) {
-                return 0;
-            }
-            
-            // Calcular componente de localização (normalizado)
-            const componenteLocalizacao = Math.max(0, 1 - (distancia / sistemaRecomendacao.limiteDistancia));
-            
-            // Calcular componente de afinidade
-            const componenteAfinidade = calcularAfinidadeUsuario(video, usuario);
-            sistemaRecomendacao.afinidadeUsuario = componenteAfinidade;
-            
-            // Aplicar fórmula principal
-            const pontuacao = (componenteLocalizacao * sistemaRecomendacao.pesoLocalizacao) + 
-                            (componenteAfinidade * sistemaRecomendacao.pesoAfinidade);
-            
-            return pontuacao;
-        }
-        
-        // Sistema de Fallback Inteligente
-        function aplicarSistemaFallback(videosDisponiveis, usuario) {
-            let videosValidos = videosDisponiveis.filter(video => {
-                const distancia = calcularDistancia(usuario.localizacao_atual, video.localizacao);
-                return distancia <= sistemaRecomendacao.limiteDistancia;
-            });
-            
-            // Se não há vídeos suficientes, ativar fallback
-            if (videosValidos.length < sistemaRecomendacao.videosMinimos) {
-                console.log(`🔄 FALLBACK ATIVADO: Apenas ${videosValidos.length} vídeos encontrados (mínimo: ${sistemaRecomendacao.videosMinimos})`);
-                sistemaRecomendacao.modoFallback = true;
-                
-                // Expandir limite de distância gradualmente
-                let limiteExpandido = sistemaRecomendacao.limiteDistancia;
-                while (videosValidos.length < sistemaRecomendacao.videosMinimos && limiteExpandido <= 50) {
-                    limiteExpandido += 10;
-                    videosValidos = videosDisponiveis.filter(video => {
-                        const distancia = calcularDistancia(usuario.localizacao_atual, video.localizacao);
-                        return distancia <= limiteExpandido;
-                    });
-                    console.log(`📍 Expandindo para ${limiteExpandido}km: ${videosValidos.length} vídeos`);
-                }
-                
-                // Se ainda não há vídeos suficientes, preencher com alta afinidade
-                if (videosValidos.length < sistemaRecomendacao.videosMinimos) {
-                    console.log("🎯 Preenchendo com vídeos de alta afinidade...");
-                    const videosAfinidade = videosDisponiveis
-                        .filter(video => !videosValidos.includes(video))
-                        .sort((a, b) => calcularAfinidadeUsuario(b, usuario) - calcularAfinidadeUsuario(a, usuario))
-                        .slice(0, sistemaRecomendacao.videosMinimos - videosValidos.length);
-                    
-                    videosValidos = [...videosValidos, ...videosAfinidade];
-                }
-                
-                usuario.configuracoes_algoritmo.modo_fallback = true;
-            } else {
-                sistemaRecomendacao.modoFallback = false;
-                usuario.configuracoes_algoritmo.modo_fallback = false;
-            }
-            
-            return videosValidos;
-        }
-        
-        // Função principal de recomendação
-        function gerarRecomendacoes(usuario = usuarioAtual) {
-            console.log("🤖 INICIANDO SISTEMA DE RECOMENDAÇÃO TAPPY");
-            
-            // 1. Atualizar localização atual (simula GPS)
-            atualizarLocalizacaoAtual(usuario);
-            
-            // 2. Atualizar pesos baseado no tempo de uso
-            atualizarPesos(usuario);
-            
-            console.log(`📊 Configurações: Localização=${sistemaRecomendacao.pesoLocalizacao.toFixed(2)}, Afinidade=${sistemaRecomendacao.pesoAfinidade.toFixed(2)}, Limite=${sistemaRecomendacao.limiteDistancia}km`);
-            
-            // 3. Aplicar sistema de fallback
-            let videosDisponiveis = aplicarSistemaFallback(database.videos, usuario);
-            
-            // 4. Calcular pontuações e ordenar
-            const videosComPontuacao = videosDisponiveis.map(video => {
-                const pontuacao = calcularPontuacaoRecomendacao(video, usuario);
-                return {
-                    ...video,
-                    pontuacao_recomendacao: pontuacao,
-                    distancia_usuario: calcularDistancia(usuario.localizacao_atual, video.localizacao),
-                    afinidade_usuario: calcularAfinidadeUsuario(video, usuario)
-                };
-            });
-            
-            // 5. Ordenar por pontuação (decrescente)
-            const videosOrdenados = videosComPontuacao
-                .filter(video => video.pontuacao_recomendacao > 0)
-                .sort((a, b) => b.pontuacao_recomendacao - a.pontuacao_recomendacao);
-            
-            console.log(`✅ ${videosOrdenados.length} vídeos recomendados`);
-            console.log("🏆 Top 3 recomendações:");
-            videosOrdenados.slice(0, 3).forEach((video, index) => {
-                console.log(`${index + 1}. ${video.titulo} (Score: ${video.pontuacao_recomendacao.toFixed(3)}, Dist: ${video.distancia_usuario.toFixed(1)}km, Afinidade: ${video.afinidade_usuario.toFixed(2)})`);
-            });
-            
-            return videosOrdenados;
-        }
-        
-        // Atualizar localização atual (simula GPS)
-        function atualizarLocalizacaoAtual(usuario) {
-            // Simula pequenas variações na localização
-            const variacao = 0.001; // ~100m
-            const novaLat = usuario.localizacao_atual[1] + (Math.random() - 0.5) * variacao;
-            const novaLng = usuario.localizacao_atual[0] + (Math.random() - 0.5) * variacao;
-            
-            // Adicionar ao histórico
-            usuario.historico_locais.push({
-                coordenadas: [...usuario.localizacao_atual],
-                timestamp: new Date(),
-                categoria: 'movimento'
-            });
-            
-            // Atualizar localização atual
-            usuario.localizacao_atual = [novaLng, novaLat];
-            
-            // Manter apenas últimas 100 localizações
-            if (usuario.historico_locais.length > 100) {
-                usuario.historico_locais = usuario.historico_locais.slice(-100);
-            }
-        }
-        
-        // Registrar histórico de locais ao assistir vídeo
-        function registrarHistoricoLocal(videoId, usuario) {
-            const video = database.videos.find(v => v.id === videoId);
-            if (video) {
-                usuario.historico_locais.push({
-                    coordenadas: video.localizacao,
-                    timestamp: new Date(),
-                    categoria: video.categoria
-                });
-                
-                console.log(`📍 Histórico local registrado: ${video.categoria} em ${video.localizacao}`);
-            }
-        }
-        
-        // Recalcular afinidade após interação
-        function recalcularAfinidade(videoId, tipoInteracao, tempoAssistido, usuario) {
-            const video = database.videos.find(v => v.id === videoId);
-            if (!video) return;
-            
-            // Registrar interação
-            usuario.historico_interacoes.push({
-                video_id: videoId,
-                tipo: tipoInteracao,
-                timestamp: new Date(),
-                tempo_assistido: tempoAssistido || 0
-            });
-            
-            // Atualizar pontuação de afinidade da categoria
-            const categoriaAtual = usuario.pontuacao_afinidade[video.categoria] || 0;
-            let incremento = 0;
-            
-            switch(tipoInteracao) {
-                case 'visualizacao':
-                    incremento = 0.01;
-                    break;
-                case 'curtida':
-                    incremento = 0.05;
-                    break;
-                case 'comentario':
-                    incremento = 0.08;
-                    break;
-                case 'compartilhamento':
-                    incremento = 0.10;
-                    break;
-            }
-            
-            // Bonus por tempo assistido (se assistiu mais de 70% do vídeo)
-            if (tempoAssistido && video.tempo_total_video) {
-                const percentualAssistido = tempoAssistido / video.tempo_total_video;
-                if (percentualAssistido > 0.7) {
-                    incremento *= 1.5; // Bonus de 50%
-                }
-            }
-            
-            usuario.pontuacao_afinidade[video.categoria] = Math.min(categoriaAtual + incremento, 1);
-            
-            // Adicionar tags preferidas
-            video.tags.forEach(tag => {
-                if (!usuario.preferencias.tags_preferidas.includes(tag)) {
-                    // Adicionar tag se usuário interagiu positivamente
-                    if (['curtida', 'comentario', 'compartilhamento'].includes(tipoInteracao)) {
-                        usuario.preferencias.tags_preferidas.push(tag);
-                    }
-                }
-            });
-            
-            console.log(`🎯 Afinidade atualizada: ${video.categoria} = ${usuario.pontuacao_afinidade[video.categoria].toFixed(3)}`);
-        }
-        
-        // 4. INTEGRAÇÃO COM INTERFACE DO USUÁRIO
-        
-        // Variável global para armazenar recomendações atuais
-        let videosRecomendados = [];
-        
-        // Inicializar sistema de recomendação
-        function inicializarSistemaRecomendacao() {
-            console.log("🚀 INICIALIZANDO SISTEMA DE RECOMENDAÇÃO TAPPY");
-            videosRecomendados = gerarRecomendacoes(usuarioAtual);
-            return videosRecomendados;
-        }
-        
-        // Atualizar recomendações (chamado automaticamente)
-        function atualizarRecomendacoes() {
-            videosRecomendados = gerarRecomendacoes(usuarioAtual);
-            
-            // Atualizar interface do feed se estiver visível
-            const feedTab = document.getElementById('feed-tab');
-            if (feedTab && !feedTab.classList.contains('hidden')) {
-                atualizarFeedInterface();
-            }
-        }
-        
-        // Atualizar interface do feed com vídeos recomendados
-        function atualizarFeedInterface() {
-            // Esta função seria chamada para atualizar a interface
-            // Por enquanto, apenas registra no console
-            console.log("🔄 Interface do feed atualizada com novas recomendações");
-        }
-        
-        // Função chamada quando usuário interage com vídeo
-        function registrarInteracaoCompleta(videoId, tipoInteracao, tempoAssistido = null) {
-            // 1. Recalcular afinidade
-            recalcularAfinidade(videoId, tipoInteracao, tempoAssistido, usuarioAtual);
-            
-            // 2. Registrar histórico local
-            registrarHistoricoLocal(videoId, usuarioAtual);
-            
-            // 3. Atualizar recomendações
-            setTimeout(() => {
-                atualizarRecomendacoes();
-            }, 1000);
-            
-            console.log(`✅ Interação registrada: ${tipoInteracao} no vídeo ${videoId}`);
-        }
-        
-        // Função para obter vídeos para o feed (substitui função antiga)
-        function obterConteudosParaFeed() {
-            if (videosRecomendados.length === 0) {
-                videosRecomendados = inicializarSistemaRecomendacao();
-            }
-            return videosRecomendados.slice(0, 10); // Retorna top 10
-        }
-        
-        // Função de teste do sistema completo
-        function executarTestesRecomendacao() {
-            console.log("🧪 EXECUTANDO TESTES DO SISTEMA DE RECOMENDAÇÃO");
-            
-            // Teste 1: Recomendações iniciais
-            console.log("\n📊 TESTE 1: Recomendações iniciais");
-            const recomendacoesIniciais = gerarRecomendacoes(usuarioAtual);
-            
-            // Teste 2: Simular interação e ver mudanças
-            console.log("\n📊 TESTE 2: Simulando interação com vídeo de beleza");
-            registrarInteracaoCompleta(2, 'curtida', 20);
-            
-            // Teste 3: Simular mudança de localização
-            console.log("\n📊 TESTE 3: Simulando mudança de localização");
-            usuarioAtual.localizacao_atual = [-46.6340, -23.5520]; // Próximo à nail designer
-            const recomendacoesPosLocalizacao = gerarRecomendacoes(usuarioAtual);
-            
-            // Teste 4: Testar sistema de fallback
-            console.log("\n📊 TESTE 4: Testando sistema de fallback");
-            usuarioAtual.localizacao_atual = [-46.7000, -23.6000]; // Localização distante
-            const recomendacoesFallback = gerarRecomendacoes(usuarioAtual);
-            
-            // Restaurar localização original
-            usuarioAtual.localizacao_atual = [-46.6333, -23.5505];
-            
-            console.log("\n✅ TESTES CONCLUÍDOS COM SUCESSO!");
-            console.log(`📈 Sistema processou ${database.videos.length} vídeos`);
-            console.log(`👤 Usuário: ${usuarioAtual.nome} (${calcularTempoUso(usuarioAtual)} dias de uso)`);
-            console.log(`⚙️ Configuração atual: Loc=${sistemaRecomendacao.pesoLocalizacao.toFixed(2)}, Afinidade=${sistemaRecomendacao.pesoAfinidade.toFixed(2)}`);
-        }
-        
-        // 5. FUNÇÃO PARA ORDENAR EMPRESAS
-        function ordenarEmpresas(usuario = usuarioAtual) {
-            const empresasComPontuacao = database.empresas.map(empresa => {
-                const proximidade = calcularProximidadeScore({localizacao: empresa.localizacao}, usuario);
-                const afinidade = usuario.categorias_preferidas.includes(empresa.categoria) ? 100 : 0;
-                const checkin = usuario.historico_checkins.includes(empresa.id) ? 50 : 0;
-                const qualidade = empresa.media_avaliacao * 20;
-                
-                const pontuacao = (proximidade * 0.4) + (afinidade * 0.3) + (checkin * 0.2) + (qualidade * 0.1);
-                
-                return {
-                    ...empresa,
-                    pontuacao_algoritmo: pontuacao
-                };
-            });
-            
-            return empresasComPontuacao.sort((a, b) => b.pontuacao_algoritmo - a.pontuacao_algoritmo);
-        }
-        
-        // 6. FUNÇÕES DE ATUALIZAÇÃO AUTOMÁTICA
-        function atualizarLocalizacaoUsuario(novaLocalizacao) {
-            usuarioAtual.historico_localizacoes.push(usuarioAtual.localizacao_atual);
-            usuarioAtual.localizacao_atual = novaLocalizacao;
-            
-            // Manter apenas as últimas 50 localizações
-            if (usuarioAtual.historico_localizacoes.length > 50) {
-                usuarioAtual.historico_localizacoes = usuarioAtual.historico_localizacoes.slice(-50);
-            }
-            
-            // Reordenar conteúdos automaticamente
-            conteudosOrdenados = ordenarConteudos();
-            empresasOrdenadas = ordenarEmpresas();
-        }
-        
-        function registrarInteracao(conteudoId, tipoInteracao) {
-            if (!usuarioAtual.historico_interacoes.includes(conteudoId)) {
-                usuarioAtual.historico_interacoes.push(conteudoId);
-            }
-            
-            // Atualizar estatísticas do conteúdo
-            const conteudo = database.conteudos.find(c => c.id === conteudoId);
-            if (conteudo) {
-                switch(tipoInteracao) {
-                    case 'curtida':
-                        conteudo.curtidas++;
-                        break;
-                    case 'comentario':
-                        conteudo.comentarios++;
-                        break;
-                    case 'compartilhamento':
-                        conteudo.compartilhamentos++;
-                        break;
-                }
-            }
-            
-            // Atualizar afinidade com categoria
-            if (conteudo && !usuarioAtual.categorias_preferidas.includes(conteudo.categoria)) {
-                usuarioAtual.categorias_preferidas.push(conteudo.categoria);
-            }
-            
-            // Reordenar conteúdos
-            conteudosOrdenados = ordenarConteudos();
-        }
-        
-        function registrarCheckin(empresaId) {
-            if (!usuarioAtual.historico_checkins.includes(empresaId)) {
-                usuarioAtual.historico_checkins.push(empresaId);
-            }
-            
-            // Reordenar empresas
-            empresasOrdenadas = ordenarEmpresas();
-        }
-        
-        // 7. INICIALIZAÇÃO DO SISTEMA
-        let conteudosOrdenados = ordenarConteudos();
-        let empresasOrdenadas = ordenarEmpresas();
-        
-        // 8. TESTE AUTOMÁTICO (executado silenciosamente)
-        function executarTestesAlgoritmo() {
-            console.log("🔍 EXECUTANDO TESTES DO ALGORITMO TAPPY");
-            
-            // Teste 1: Verificar ordenação inicial
-            console.log("📊 Top 3 conteúdos para Ana Silva:");
-            conteudosOrdenados.slice(0, 3).forEach((conteudo, index) => {
-                console.log(`${index + 1}. ${conteudo.titulo} (Score: ${conteudo.pontuacao_algoritmo.toFixed(2)})`);
-            });
-            
-            // Teste 2: Simular mudança de localização
-            console.log("\n📍 Simulando mudança de localização...");
-            const localizacaoAntiga = [...usuarioAtual.localizacao_atual];
-            atualizarLocalizacaoUsuario([-46.6340, -23.5520]); // Próximo à Maria - Nail Designer
-            
-            console.log("📊 Top 3 conteúdos após mudança de localização:");
-            conteudosOrdenados.slice(0, 3).forEach((conteudo, index) => {
-                console.log(`${index + 1}. ${conteudo.titulo} (Score: ${conteudo.pontuacao_algoritmo.toFixed(2)})`);
-            });
-            
-            // Teste 3: Simular interação
-            console.log("\n❤️ Simulando curtida no conteúdo de nail art...");
-            registrarInteracao(2, 'curtida');
-            
-            console.log("📊 Top 3 conteúdos após interação:");
-            conteudosOrdenados.slice(0, 3).forEach((conteudo, index) => {
-                console.log(`${index + 1}. ${conteudo.titulo} (Score: ${conteudo.pontuacao_algoritmo.toFixed(2)})`);
-            });
-            
-            // Restaurar localização original
-            usuarioAtual.localizacao_atual = localizacaoAntiga;
-            conteudosOrdenados = ordenarConteudos();
-            
-            console.log("\n✅ Testes do algoritmo concluídos com sucesso!");
-        }
-        
-        // Inicializar sistema de recomendação automaticamente
-        setTimeout(() => {
-            inicializarSistemaRecomendacao();
-            executarTestesRecomendacao();
-        }, 2000);
-        
-        // 9. FUNÇÃO PARA OBTER CONTEÚDOS ORDENADOS (usada pelo feed)
-        function obterConteudosParaFeed() {
-            return conteudosOrdenados.slice(0, 10); // Retorna top 10
-        }
-        
-        function obterEmpresasParaMapa() {
-            return empresasOrdenadas.slice(0, 20); // Retorna top 20
-        }
-        
-        // ===== FIM DO SISTEMA DE ALGORITMO =====
-
-        // ===== SISTEMA DE NOTIFICAÇÕES =====
-        
-        // Base de dados de notificações
+        // Variáveis globais
+        let mapInitialized = false;
         let notificationsData = [
             {
                 id: 1,
@@ -1647,262 +770,83 @@
                 read: true,
                 business: null,
                 action: 'Ver perfil'
-            },
-            {
-                id: 4,
-                type: 'checkin_reminder',
-                title: 'Que tal um check-in?',
-                message: 'Você está perto do Café da Esquina. Já experimentou o latte especial?',
-                icon: '📍',
-                time: '2 horas atrás',
-                read: false,
-                business: 'Café da Esquina',
-                action: 'Fazer check-in'
             }
         ];
-        
-        // Configurações de notificação
-        let notificationSettings = {
-            newVideos: true,
-            promotions: true,
-            checkinReminders: false,
-            socialInteractions: true,
-            silentHours: {
-                enabled: true,
-                start: '22:00',
-                end: '08:00'
-            }
-        };
-        
-        // Funções do sistema de notificações
-        function toggleNotifications() {
-            const panel = document.getElementById('notifications-panel');
-            const isHidden = panel.classList.contains('hidden');
-            
-            if (isHidden) {
-                panel.classList.remove('hidden');
-                loadNotifications();
-                // Marcar ícone como ativo
-                document.getElementById('notification-icon').textContent = '🔔';
-            } else {
-                panel.classList.add('hidden');
-            }
-        }
-        
-        function loadNotifications() {
-            const notificationsList = document.getElementById('notifications-list');
-            const unreadCount = notificationsData.filter(n => !n.read).length;
-            
-            // Atualizar badge
-            const badge = document.getElementById('notification-badge');
-            if (unreadCount > 0) {
-                badge.textContent = unreadCount;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-            
-            // Renderizar notificações
-            notificationsList.innerHTML = notificationsData.map(notification => `
-                <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer ${!notification.read ? 'bg-blue-50' : ''}" 
-                     onclick="handleNotificationClick(${notification.id})">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg" 
-                             style="background-color: ${getNotificationColor(notification.type)};">
-                            ${notification.icon}
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between">
-                                <p class="font-semibold text-sm text-gray-900 truncate">${notification.title}</p>
-                                <span class="text-xs text-gray-500">${notification.time}</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">${notification.message}</p>
-                            ${notification.action ? `<button class="text-xs text-tappy-blue font-semibold mt-2 hover:text-blue-600 transition-colors">${notification.action}</button>` : ''}
-                        </div>
-                        ${!notification.read ? '<div class="w-2 h-2 bg-tappy-blue rounded-full"></div>' : ''}
-                    </div>
-                </div>
-            `).join('');
-            
-            // Se não há notificações
-            if (notificationsData.length === 0) {
-                notificationsList.innerHTML = `
-                    <div class="p-8 text-center text-gray-500">
-                        <div class="text-4xl mb-2">🔔</div>
-                        <p class="font-medium">Nenhuma notificação</p>
-                        <p class="text-sm">Você está em dia!</p>
-                    </div>
-                `;
-            }
-        }
-        
-        function getNotificationColor(type) {
-            const colors = {
-                'new_video': '#E3F2FD',
-                'promotion': '#FFF3E0',
-                'social': '#FCE4EC',
-                'checkin_reminder': '#E8F5E8'
-            };
-            return colors[type] || '#F5F5F5';
-        }
-        
-        function handleNotificationClick(notificationId) {
-            const notification = notificationsData.find(n => n.id === notificationId);
-            if (!notification) return;
-            
-            // Marcar como lida
-            notification.read = true;
-            
-            // Ações baseadas no tipo
-            switch(notification.type) {
-                case 'new_video':
-                    toggleNotifications();
-                    showTab('feed');
-                    break;
-                case 'promotion':
-                    toggleNotifications();
-                    showTab('map');
-                    break;
-                case 'social':
-                    toggleNotifications();
-                    showTab('profile');
-                    break;
-                case 'checkin_reminder':
-                    toggleNotifications();
-                    showTab('map');
-                    break;
-            }
-            
-            // Recarregar notificações
-            loadNotifications();
-        }
-        
-        function markAllAsRead() {
-            notificationsData.forEach(notification => {
-                notification.read = true;
-            });
-            loadNotifications();
-            
-            // Feedback visual
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = '✓ Marcadas como lidas';
-            button.style.color = '#10B981';
-            
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.style.color = '';
-            }, 2000);
-        }
-        
-        function openNotificationSettings() {
-            document.getElementById('notification-settings-modal').classList.remove('hidden');
-            toggleNotifications(); // Fechar painel
-        }
-        
-        function closeNotificationSettings() {
-            document.getElementById('notification-settings-modal').classList.add('hidden');
-        }
-        
-        // Função para adicionar nova notificação (simulação)
-        function addNotification(type, title, message, business = null) {
-            const newNotification = {
-                id: Date.now(),
-                type: type,
-                title: title,
-                message: message,
-                icon: getNotificationIcon(type),
-                time: 'Agora',
-                read: false,
-                business: business,
-                action: getNotificationAction(type)
-            };
-            
-            notificationsData.unshift(newNotification);
-            
-            // Limitar a 20 notificações
-            if (notificationsData.length > 20) {
-                notificationsData = notificationsData.slice(0, 20);
-            }
-            
-            // Atualizar badge se painel estiver fechado
-            const panel = document.getElementById('notifications-panel');
-            if (panel.classList.contains('hidden')) {
-                const unreadCount = notificationsData.filter(n => !n.read).length;
-                const badge = document.getElementById('notification-badge');
-                badge.textContent = unreadCount;
-                badge.classList.remove('hidden');
-                
-                // Animação do sino
-                const icon = document.getElementById('notification-icon');
-                icon.style.animation = 'bounce 0.5s ease-in-out';
-                setTimeout(() => {
-                    icon.style.animation = '';
-                }, 500);
-            }
-        }
-        
-        function getNotificationIcon(type) {
-            const icons = {
-                'new_video': '🎬',
-                'promotion': '🎉',
-                'social': '❤️',
-                'checkin_reminder': '📍'
-            };
-            return icons[type] || '🔔';
-        }
-        
-        function getNotificationAction(type) {
-            const actions = {
-                'new_video': 'Ver vídeo',
-                'promotion': 'Ver oferta',
-                'social': 'Ver perfil',
-                'checkin_reminder': 'Fazer check-in'
-            };
-            return actions[type] || 'Ver mais';
-        }
-        
-        // Simulador de notificações em tempo real
-        function startNotificationSimulator() {
-            const simulatedNotifications = [
-                {
-                    type: 'new_video',
-                    title: 'Novo vídeo próximo!',
-                    message: 'Barbearia Moderna postou: "Corte degradê perfeito em 5 minutos"',
-                    business: 'Barbearia Moderna'
-                },
-                {
-                    type: 'promotion',
-                    title: 'Oferta relâmpago! ⚡',
-                    message: 'Pizzaria Nonna: Pizza grande por R$ 25,90 apenas hoje!',
-                    business: 'Pizzaria Nonna'
-                },
-                {
-                    type: 'social',
-                    title: 'Novo seguidor!',
-                    message: 'Mariana Costa começou a te seguir',
-                    business: null
-                }
-            ];
-            
-            let index = 0;
-            setInterval(() => {
-                if (index < simulatedNotifications.length) {
-                    const notif = simulatedNotifications[index];
-                    addNotification(notif.type, notif.title, notif.message, notif.business);
-                    index++;
-                }
-            }, 30000); // Nova notificação a cada 30 segundos
-        }
-        
-        // Inicializar sistema de notificações
-        setTimeout(() => {
-            loadNotifications();
-            startNotificationSimulator();
-        }, 2000);
-        
-        // ===== FIM DO SISTEMA DE NOTIFICAÇÕES =====
 
+        // Dados dos negócios expandidos
+        const businessData = [
+            {
+                id: 'padaria',
+                name: 'Padaria do João',
+                description: 'Tradição em pães artesanais desde 1985',
+                fullDescription: 'Há mais de 35 anos servindo a comunidade com pães frescos e produtos de qualidade. Utilizamos apenas ingredientes selecionados e receitas familiares passadas de geração em geração.',
+                icon: '🍞',
+                color: '#FFB703',
+                coordinates: [-46.6320, -23.5490],
+                distance: '500m',
+                rating: 4.8,
+                followers: 1250,
+                posts: 89,
+                address: 'Rua das Flores, 123 - Centro',
+                phone: '(11) 99999-1234',
+                hours: 'Seg-Sáb: 6h-19h | Dom: 7h-13h',
+                specialties: ['Pão Francês', 'Croissant', 'Bolo de Chocolate', 'Sonho'],
+                videos: [
+                    { title: 'Pães frescos saindo do forno', likes: 124, time: '2h' },
+                    { title: 'Fazendo croissants artesanais', likes: 89, time: '1d' },
+                    { title: 'Receita secreta do bolo', likes: 156, time: '3d' },
+                    { title: 'Manhã na padaria', likes: 67, time: '5d' }
+                ]
+            },
+            {
+                id: 'manicure',
+                name: 'Maria - Nail Designer',
+                description: 'Especialista em nail art há 8 anos',
+                fullDescription: 'Profissional certificada em nail art e cuidados com as unhas. Atendimento personalizado com técnicas modernas e produtos de alta qualidade. Cada cliente é único!',
+                icon: '💅',
+                color: '#1DA1F2',
+                coordinates: [-46.6340, -23.5520],
+                distance: '300m',
+                rating: 4.9,
+                followers: 890,
+                posts: 156,
+                address: 'Av. Beleza, 456 - Sala 12',
+                phone: '(11) 98888-5678',
+                hours: 'Ter-Sáb: 9h-18h',
+                specialties: ['Nail Art', 'Esmaltação', 'Alongamento', 'Cuidados'],
+                videos: [
+                    { title: 'Nail art incrível em processo', likes: 89, time: '1h' },
+                    { title: 'Técnica de alongamento', likes: 134, time: '2d' },
+                    { title: 'Cuidados com cutículas', likes: 78, time: '4d' },
+                    { title: 'Tendências de esmalte', likes: 112, time: '6d' }
+                ]
+            },
+            {
+                id: 'cafe',
+                name: 'Café da Esquina',
+                description: 'O melhor café especial da região',
+                fullDescription: 'Café especial torrado artesanalmente com grãos selecionados. Ambiente aconchegante perfeito para trabalhar, estudar ou relaxar. Baristas especializados em latte art.',
+                icon: '☕',
+                color: '#FFB703',
+                coordinates: [-46.6310, -23.5480],
+                distance: '800m',
+                rating: 4.7,
+                followers: 2100,
+                posts: 203,
+                address: 'Esquina da Paz, 789',
+                phone: '(11) 97777-9012',
+                hours: 'Seg-Dom: 7h-22h',
+                specialties: ['Espresso', 'Cappuccino', 'Latte Art', 'Doces'],
+                videos: [
+                    { title: 'Latte art em ação', likes: 156, time: '30min' },
+                    { title: 'Processo de torra especial', likes: 201, time: '1d' },
+                    { title: 'Receita do cappuccino perfeito', likes: 178, time: '2d' },
+                    { title: 'Ambiente aconchegante', likes: 145, time: '4d' }
+                ]
+            }
+        ];
+
+        // Funções principais
         function showScreen(screenId) {
             const screens = ['welcome-screen', 'signup-screen', 'login-screen', 'main-app'];
             screens.forEach(screen => {
@@ -1923,7 +867,7 @@
 
         function showMainApp() {
             showScreen('main-app');
-            showTab('feed');
+            showTab('map'); // Mudança: inicia no mapa em vez do feed
         }
 
         function showTab(tabName) {
@@ -1931,6 +875,14 @@
             tabs.forEach(tab => tab.classList.add('hidden'));
             
             document.getElementById(tabName + '-tab').classList.remove('hidden');
+            
+            // Inicializar mapa quando necessário
+            if (tabName === 'map' && !mapInitialized) {
+                setTimeout(() => {
+                    initializeMap();
+                    mapInitialized = true;
+                }, 100);
+            }
             
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => {
@@ -1942,361 +894,11 @@
             event.target.closest('.tab-btn').classList.add('text-tappy-blue');
         }
 
-        function toggleVideo(container) {
-            const playBtn = container.querySelector('.play-btn');
-            const textCenter = container.querySelector('.text-center');
-            
-            if (playBtn.textContent === '▶') {
-                playBtn.textContent = '⏸';
-                container.style.background = 'linear-gradient(135deg, #1E90FF, #FFD700)';
-                textCenter.innerHTML = '<div class="text-white font-bold text-lg animate-pulse">🎬 Reproduzindo...</div>';
-                
-                // Registrar visualização no sistema de recomendação
-                const videoContainers = document.querySelectorAll('.video-container');
-                const videoIndex = Array.from(videoContainers).indexOf(container);
-                if (videoIndex >= 0 && videoIndex < 3) {
-                    const videoId = videoIndex + 1;
-                    // Simular tempo de visualização após 3 segundos
-                    setTimeout(() => {
-                        registrarInteracaoCompleta(videoId, 'visualizacao', 15);
-                    }, 3000);
-                }
-            } else {
-                playBtn.textContent = '▶';
-                container.style.background = '';
-                // Restaura o conteúdo original sem recarregar a página
-                const originalText = container.closest('.bg-white').querySelector('h3').textContent.includes('Padaria') ? 
-                    'Pães frescos saindo do forno!' : 
-                    container.closest('.bg-white').querySelector('h3').textContent.includes('Maria') ? 
-                    'Nail art incrível em processo!' : 
-                    'Latte art em ação!';
-                
-                textCenter.innerHTML = `
-                    <div class="w-16 h-16 bg-white bg-opacity-90 rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg hover-scale">
-                        <span class="text-tappy-blue text-2xl play-btn">▶</span>
-                    </div>
-                    <p class="text-gray-700 font-medium">${originalText}</p>
-                `;
-            }
-        }
-
-        function likeVideo(button) {
-            const heart = button.querySelector('span');
-            const countSpan = button.querySelector('.like-count');
-            let count = parseInt(countSpan.textContent);
-            
-            if (heart.textContent === '🤍') {
-                heart.textContent = '❤️';
-                heart.classList.add('heart-bounce');
-                countSpan.textContent = count + 1;
-                button.classList.remove('text-gray-600');
-                button.classList.add('text-red-500');
-                
-                // Registrar interação no sistema de recomendação
-                const videoIndex = Array.from(document.querySelectorAll('.like-btn')).indexOf(button);
-                if (videoIndex >= 0 && videoIndex < 3) {
-                    const videoId = videoIndex + 1; // IDs 1, 2, 3 para os vídeos visíveis
-                    registrarInteracaoCompleta(videoId, 'curtida', 25); // Simula tempo assistido
-                }
-            } else {
-                heart.textContent = '🤍';
-                countSpan.textContent = count - 1;
-                button.classList.remove('text-red-500');
-                button.classList.add('text-gray-600');
-            }
-            
-            setTimeout(() => heart.classList.remove('heart-bounce'), 600);
-        }
-
-
-
-        function openComments() {
-            document.getElementById('comments-modal').classList.remove('hidden');
-        }
-
-        function closeComments() {
-            document.getElementById('comments-modal').classList.add('hidden');
-        }
-
-        function shareVideo() {
-            // Simula animação de compartilhamento
-            const shareBtn = event.target;
-            shareBtn.style.transform = 'scale(1.2)';
-            setTimeout(() => shareBtn.style.transform = 'scale(1)', 200);
-            
-            // Registrar interação no sistema de recomendação
-            const shareButtons = document.querySelectorAll('button[onclick="shareVideo()"]');
-            const videoIndex = Array.from(shareButtons).indexOf(shareBtn);
-            if (videoIndex >= 0 && videoIndex < 3) {
-                const videoId = videoIndex + 1; // IDs 1, 2, 3 para os vídeos visíveis
-                registrarInteracaoCompleta(videoId, 'compartilhamento', 30); // Simula tempo assistido completo
-            }
-            
-            // Simula compartilhamento
-            alert('Vídeo compartilhado! 📤');
-        }
-
-        function showBusinessCard(businessType) {
-            const businesses = {
-                padaria: {
-                    name: 'Padaria do João',
-                    description: 'Pães artesanais frescos todos os dias',
-                    icon: '🍞',
-                    color: 'from-tappy-gold to-yellow-400',
-                    distance: '500m'
-                },
-                manicure: {
-                    name: 'Maria - Nail Designer',
-                    description: 'Nail art e cuidados com as unhas',
-                    icon: '💅',
-                    color: 'from-pink-400 to-purple-400',
-                    distance: '300m'
-                },
-                cafe: {
-                    name: 'Café da Esquina',
-                    description: 'O melhor café da região',
-                    icon: '☕',
-                    color: 'from-amber-600 to-orange-500',
-                    distance: '800m'
-                }
-            };
-            
-            const business = businesses[businessType];
-            const content = `
-                <div class="flex items-center space-x-4 mb-4">
-                    <div class="w-16 h-16 bg-gradient-to-r ${business.color} rounded-full flex items-center justify-center text-2xl">
-                        ${business.icon}
-                    </div>
-                    <div class="flex-1 text-left">
-                        <h3 class="font-bold text-lg">${business.name}</h3>
-                        <p class="text-gray-600 text-sm">${business.description}</p>
-                        <p class="text-tappy-blue text-sm">📍 ${business.distance} de você</p>
-                    </div>
-                </div>
-                <div class="flex space-x-3">
-                    <button onclick="showBusinessProfile('${businessType}')" class="flex-1 bg-tappy-blue text-white py-3 rounded-xl font-semibold btn-hover">
-                        Ver Perfil
-                    </button>
-                    <button onclick="openContactModal()" class="flex-1 bg-tappy-gold text-gray-800 py-3 rounded-xl font-semibold btn-hover">
-                        Contato
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('business-card-content').innerHTML = content;
-            document.getElementById('business-card').classList.remove('hidden');
-        }
-
-        function showBusinessProfile(businessType) {
-            const businesses = {
-                padaria: {
-                    name: 'Padaria do João',
-                    description: 'Tradição em pães artesanais desde 1985. Utilizamos apenas ingredientes selecionados e receitas familiares.',
-                    icon: '🍞',
-                    color: 'from-tappy-gold to-yellow-400',
-                    id: 1
-                },
-                manicure: {
-                    name: 'Maria - Nail Designer',
-                    description: 'Especialista em nail art com mais de 8 anos de experiência. Atendimento personalizado e técnicas modernas.',
-                    icon: '💅',
-                    color: 'from-pink-400 to-purple-400',
-                    id: 2
-                },
-                cafe: {
-                    name: 'Café da Esquina',
-                    description: 'Café especial torrado artesanalmente. Ambiente aconchegante para trabalhar ou relaxar.',
-                    icon: '☕',
-                    color: 'from-amber-600 to-orange-500',
-                    id: 3
-                }
-            };
-            
-            const business = businesses[businessType];
-            const content = `
-                <div class="bg-gradient-to-r ${business.color} p-8 rounded-3xl text-white mb-6">
-                    <div class="text-6xl mb-4">${business.icon}</div>
-                    <h2 class="text-3xl font-bold mb-2">${business.name}</h2>
-                    <p class="opacity-90 mb-4">${business.description}</p>
-                    <div class="flex space-x-4">
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">⭐ 4.8</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">📍 Próximo</span>
-                        <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">🕒 Aberto</span>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold mb-4">Vídeos Recentes</h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="aspect-square bg-gradient-to-br ${business.color} rounded-xl hover-scale cursor-pointer"></div>
-                        <div class="aspect-square bg-gradient-to-br ${business.color} rounded-xl hover-scale cursor-pointer"></div>
-                        <div class="aspect-square bg-gradient-to-br ${business.color} rounded-xl hover-scale cursor-pointer"></div>
-                        <div class="aspect-square bg-gradient-to-br ${business.color} rounded-xl hover-scale cursor-pointer"></div>
-                    </div>
-                </div>
-                
-                <button onclick="fazerCheckin(${business.id})" class="w-full bg-tappy-gold text-gray-800 py-4 rounded-xl font-semibold btn-hover mb-4">
-                    📍 Fazer Check-in
-                </button>
-                
-                <button onclick="openContactModal()" class="w-full bg-tappy-blue text-white py-4 rounded-xl font-semibold btn-hover mb-4">
-                    Entrar em Contato
-                </button>
-                
-                <div class="grid grid-cols-3 gap-3">
-                    <button class="bg-gray-100 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-200 transition-colors">
-                        Seguir
-                    </button>
-                    <button class="bg-gray-100 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-200 transition-colors">
-                        Compartilhar
-                    </button>
-                    <button class="bg-gray-100 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-200 transition-colors">
-                        Salvar
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('business-profile-content').innerHTML = content;
-            document.getElementById('business-profile-modal').classList.remove('hidden');
-        }
-        
-        function fazerCheckin(empresaId) {
-            // Registrar check-in no algoritmo (invisível ao usuário)
-            registrarCheckin(empresaId);
-            
-            // Feedback visual para o usuário
-            const button = event.target;
-            const originalText = button.innerHTML;
-            button.innerHTML = '✅ Check-in realizado!';
-            button.style.backgroundColor = '#10B981';
-            button.style.color = 'white';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.backgroundColor = '';
-                button.style.color = '';
-            }, 2000);
-        }
-
-        function closeBusinessProfile() {
-            document.getElementById('business-profile-modal').classList.add('hidden');
-        }
-
-        function openContactModal() {
-            document.getElementById('contact-modal').classList.remove('hidden');
-        }
-
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.add('hidden');
-        }
-
-        function addComment() {
-            const input = document.getElementById('comment-input');
-            const commentText = input.value.trim();
-            
-            if (commentText === '') {
-                return;
-            }
-            
-            const commentsContainer = document.querySelector('#comments-modal .space-y-4');
-            const newComment = document.createElement('div');
-            newComment.className = 'flex space-x-3 fade-in';
-            newComment.innerHTML = `
-                <div class="w-8 h-8 bg-gradient-to-r from-tappy-blue to-tappy-gold rounded-full"></div>
-                <div class="flex-1">
-                    <p class="font-semibold text-sm">Você</p>
-                    <p class="text-gray-600 text-sm">${commentText}</p>
-                </div>
-            `;
-            
-            commentsContainer.appendChild(newComment);
-            input.value = '';
-            
-            // Atualizar contador de comentários no modal
-            const modalTitle = document.querySelector('#comments-modal h3');
-            const currentCount = commentsContainer.children.length;
-            modalTitle.textContent = `Comentários (${currentCount})`;
-            
-            // Atualizar contador de comentários nos posts do feed
-            const commentButtons = document.querySelectorAll('.tab-content:not(.hidden) button[onclick="openComments()"]');
-            commentButtons.forEach(button => {
-                const countSpan = button.querySelector('span:last-child');
-                if (countSpan) {
-                    const count = parseInt(countSpan.textContent);
-                    countSpan.textContent = count + 1;
-                }
-            });
-            
-            // Registrar interação no sistema de recomendação
-            // Assumindo que estamos comentando no primeiro vídeo visível
-            registrarInteracaoCompleta(1, 'comentario', 20);
-            
-            // Scroll para mostrar o novo comentário
-            commentsContainer.scrollTop = commentsContainer.scrollHeight;
-        }
-
-        // Permitir enviar comentário com Enter
-        document.addEventListener('DOMContentLoaded', function() {
-            document.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && document.getElementById('comments-modal').classList.contains('hidden') === false) {
-                    const input = document.getElementById('comment-input');
-                    if (document.activeElement === input) {
-                        addComment();
-                    }
-                }
-            });
-        });
-
-        // Variáveis globais do mapa
-        let map;
-        let userLocation = [-46.6333, -23.5505]; // São Paulo como padrão
-        let currentMapStyle = 'mapbox://styles/mapbox/streets-v12';
-        let markers = [];
-
-        // Dados dos negócios (simulando banco de dados)
-        const businessData = [
-            {
-                id: 'padaria',
-                name: 'Padaria do João',
-                description: 'Pães artesanais frescos todos os dias',
-                icon: '🍞',
-                color: '#FFD700',
-                coordinates: [-46.6320, -23.5490],
-                distance: '500m'
-            },
-            {
-                id: 'manicure',
-                name: 'Maria - Nail Designer',
-                description: 'Nail art e cuidados com as unhas',
-                icon: '💅',
-                color: '#EC4899',
-                coordinates: [-46.6340, -23.5520],
-                distance: '300m'
-            },
-            {
-                id: 'cafe',
-                name: 'Café da Esquina',
-                description: 'O melhor café da região',
-                icon: '☕',
-                color: '#D97706',
-                coordinates: [-46.6310, -23.5480],
-                distance: '800m'
-            }
-        ];
-
-        // Inicializar Mapa Customizado (sem dependência externa)
+        // Função para criar o mapa customizado
         function initializeMap() {
-            // Remover tela de loading
-            document.getElementById('map-loading').classList.add('hidden');
-            
-            // Criar mapa customizado usando CSS e JavaScript
-            createCustomMap();
-        }
-
-        function createCustomMap() {
             const mapContainer = document.getElementById('mapbox-container');
             
-            // Criar fundo do mapa com gradiente
+            // Criar mapa customizado
             mapContainer.innerHTML = `
                 <div class="w-full h-full relative overflow-hidden" style="background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);">
                     <!-- Grid de ruas simulado -->
@@ -2344,7 +946,7 @@
             `;
             markersContainer.appendChild(userMarker);
             
-            // Posições dos negócios no mapa (em porcentagem)
+            // Posições dos negócios no mapa
             const businessPositions = [
                 { id: 'padaria', left: '35%', top: '40%' },
                 { id: 'manicure', left: '65%', top: '30%' },
@@ -2390,7 +992,6 @@
         }
 
         function centerMapOnUser() {
-            // Animar centralização no usuário
             const userMarker = document.querySelector('#markers-container .z-20');
             if (userMarker) {
                 userMarker.style.animation = 'none';
@@ -2420,12 +1021,11 @@
             const mapContainer = document.getElementById('mapbox-container');
             const currentBg = mapContainer.querySelector('div').style.background;
             
-            // Diferentes estilos de mapa
             const styles = [
-                'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%)', // Padrão
-                'linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 50%, #CE93D8 100%)', // Roxo
-                'linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%)', // Verde
-                'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 50%, #FFCC80 100%)'  // Laranja
+                'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%)',
+                'linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 50%, #CE93D8 100%)',
+                'linear-gradient(135deg, #E8F5E8 0%, #C8E6C9 50%, #A5D6A7 100%)',
+                'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 50%, #FFCC80 100%)'
             ];
             
             const currentIndex = styles.findIndex(style => currentBg.includes(style.split(' ')[1])) || 0;
@@ -2433,7 +1033,6 @@
             
             mapContainer.querySelector('div').style.background = styles[nextIndex];
             
-            // Feedback visual
             const button = event.target.closest('button');
             const originalContent = button.innerHTML;
             button.innerHTML = '<span class="text-xl">✨</span>';
@@ -2443,51 +1042,524 @@
             }, 500);
         }
 
-        // Modificar função showTab para inicializar mapa quando necessário
-        function showTab(tabName) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.add('hidden'));
+        function toggleVideo(container) {
+            const playBtn = container.querySelector('.play-btn');
+            const textCenter = container.querySelector('.text-center');
             
-            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            if (playBtn.textContent === '▶') {
+                playBtn.textContent = '⏸';
+                container.style.background = 'linear-gradient(135deg, #1E90FF, #FFD700)';
+                textCenter.innerHTML = '<div class="text-white font-bold text-lg animate-pulse">🎬 Reproduzindo...</div>';
+            } else {
+                playBtn.textContent = '▶';
+                container.style.background = '';
+                const originalText = container.closest('.bg-white').querySelector('h3').textContent.includes('Padaria') ? 
+                    'Pães frescos saindo do forno!' : 
+                    container.closest('.bg-white').querySelector('h3').textContent.includes('Maria') ? 
+                    'Nail art incrível em processo!' : 
+                    'Latte art em ação!';
+                
+                textCenter.innerHTML = `
+                    <div class="w-16 h-16 bg-white bg-opacity-90 rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg hover-scale">
+                        <span class="text-tappy-blue text-2xl play-btn">▶</span>
+                    </div>
+                    <p class="text-gray-700 font-medium">${originalText}</p>
+                `;
+            }
+        }
+
+        function likeVideo(button) {
+            const heart = button.querySelector('span');
+            const countSpan = button.querySelector('.like-count');
+            let count = parseInt(countSpan.textContent);
             
-            // Inicializar mapa quando a aba for aberta pela primeira vez
-            if (tabName === 'map' && !map) {
-                setTimeout(() => {
-                    initializeMap();
-                }, 100);
+            if (heart.textContent === '🤍') {
+                heart.textContent = '❤️';
+                heart.classList.add('heart-bounce');
+                countSpan.textContent = count + 1;
+                button.classList.remove('text-gray-600');
+                button.classList.add('text-red-500');
+            } else {
+                heart.textContent = '🤍';
+                countSpan.textContent = count - 1;
+                button.classList.remove('text-red-500');
+                button.classList.add('text-gray-600');
             }
             
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('text-tappy-blue');
-                btn.classList.add('text-gray-400');
+            setTimeout(() => heart.classList.remove('heart-bounce'), 600);
+        }
+
+        function openComments() {
+            document.getElementById('comments-modal').classList.remove('hidden');
+        }
+
+        function closeComments() {
+            document.getElementById('comments-modal').classList.add('hidden');
+        }
+
+        function shareVideo() {
+            const shareBtn = event.target;
+            shareBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => shareBtn.style.transform = 'scale(1)', 200);
+            alert('Vídeo compartilhado! 📤');
+        }
+
+        function showBusinessCard(businessType) {
+            const business = businessData.find(b => b.id === businessType);
+            if (!business) return;
+            
+            const content = `
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-2xl" 
+                         style="background-color: ${business.color};">
+                        ${business.icon}
+                    </div>
+                    <div class="flex-1 text-left">
+                        <h3 class="font-bold text-lg cursor-pointer hover:text-tappy-blue transition-colors" onclick="showBusinessProfile('${business.id}')">${business.name}</h3>
+                        <p class="text-gray-600 text-sm">${business.description}</p>
+                        <p class="text-tappy-blue text-sm">📍 ${business.distance} de você</p>
+                    </div>
+                </div>
+                <div class="flex space-x-3">
+                    <button onclick="showBusinessProfile('${business.id}')" class="flex-1 bg-tappy-blue text-white py-3 rounded-xl font-semibold btn-hover">
+                        Ver Perfil
+                    </button>
+                    <button onclick="openContactModal()" class="flex-1 bg-tappy-gold text-gray-800 py-3 rounded-xl font-semibold btn-hover">
+                        Contato
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('business-card-content').innerHTML = content;
+            document.getElementById('business-card').classList.remove('hidden');
+        }
+
+        function showBusinessProfile(businessType) {
+            const business = businessData.find(b => b.id === businessType);
+            if (!business) return;
+            
+            const content = `
+                <!-- Header do Perfil - Estilo igual ao usuário -->
+                <div class="text-white p-6" style="background: linear-gradient(135deg, ${business.color}, ${business.color}dd);">
+                    <div class="text-center">
+                        <div class="w-24 h-24 rounded-full mx-auto mb-4 hover-scale flex items-center justify-center text-4xl" style="background-color: rgba(255,255,255,0.2);">
+                            ${business.icon}
+                        </div>
+                        <h2 class="text-2xl font-bold">${business.name}</h2>
+                        <p class="opacity-90 mb-2">@${business.id}</p>
+                        <p class="opacity-80 text-sm mb-4">${business.fullDescription}</p>
+                        
+                        <div class="flex justify-center space-x-8 mb-6">
+                            <div class="text-center">
+                                <div class="text-xl font-bold">${business.posts}</div>
+                                <div class="text-sm opacity-80">Vídeos</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xl font-bold">${business.followers}</div>
+                                <div class="text-sm opacity-80">Seguidores</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xl font-bold">${business.rating}</div>
+                                <div class="text-sm opacity-80">Avaliação</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-3 mb-4">
+                            <button onclick="followBusiness('${business.id}')" class="flex-1 bg-white text-gray-800 py-3 rounded-full font-semibold btn-hover">
+                                Seguir
+                            </button>
+                            <button onclick="openContactModal()" class="flex-1 bg-white bg-opacity-20 text-white py-3 rounded-full font-semibold btn-hover">
+                                Contato
+                            </button>
+                        </div>
+                        
+                        <div class="flex justify-center space-x-4">
+                            <button onclick="fazerCheckin('${business.id}')" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-semibold btn-hover">
+                                📍 Check-in
+                            </button>
+                            <button onclick="shareBusiness('${business.id}')" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-semibold btn-hover">
+                                📤 Compartilhar
+                            </button>
+                            <button onclick="saveBusiness('${business.id}')" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-semibold btn-hover">
+                                🔖 Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informações da Empresa -->
+                <div class="p-6 bg-gray-50">
+                    <div class="space-y-3 text-left">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">📍</span>
+                            <span class="text-gray-700 text-sm">${business.address}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">📞</span>
+                            <span class="text-gray-700 text-sm">${business.phone}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl">🕒</span>
+                            <span class="text-gray-700 text-sm">${business.hours}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="flex flex-wrap gap-2">
+                            ${business.specialties.map(specialty => 
+                                `<span class="bg-white px-3 py-1 rounded-full text-xs text-gray-700 shadow-sm">${specialty}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Abas de Conteúdo -->
+                <div class="p-6">
+                    <div class="flex space-x-4 mb-6">
+                        <button onclick="switchBusinessTab('videos', '${business.id}')" class="business-tab-btn flex-1 bg-tappy-blue text-white py-3 rounded-xl font-semibold">
+                            Vídeos
+                        </button>
+                        <button onclick="switchBusinessTab('info', '${business.id}')" class="business-tab-btn flex-1 bg-gray-200 text-gray-600 py-3 rounded-xl font-semibold">
+                            Sobre
+                        </button>
+                    </div>
+                    
+                    <!-- Grade de Vídeos - Estilo TikTok -->
+                    <div id="business-videos-tab" class="business-tab-content">
+                        <div class="grid grid-cols-3 gap-2">
+                            ${business.videos.map((video, index) => `
+                                <div class="aspect-square rounded-lg hover-scale cursor-pointer relative overflow-hidden" 
+                                     style="background: linear-gradient(135deg, ${business.color}, ${business.color}aa);"
+                                     onclick="playBusinessVideo('${business.id}', ${index})">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-white text-center">
+                                            <div class="text-2xl mb-1">${business.icon}</div>
+                                            <div class="text-xs font-semibold opacity-90">${video.title.substring(0, 15)}...</div>
+                                        </div>
+                                    </div>
+                                    <div class="absolute bottom-2 left-2 flex items-center space-x-1">
+                                        <span class="text-white text-xs">❤️</span>
+                                        <span class="text-white text-xs font-semibold">${video.likes}</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2">
+                                        <span class="text-white text-lg">▶️</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Aba Sobre -->
+                    <div id="business-info-tab" class="business-tab-content hidden">
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-xl shadow-sm">
+                                <h4 class="font-semibold mb-2">Sobre o Negócio</h4>
+                                <p class="text-gray-600 text-sm">${business.fullDescription}</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-xl shadow-sm">
+                                <h4 class="font-semibold mb-2">Especialidades</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${business.specialties.map(specialty => 
+                                        `<span class="bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-700">${specialty}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-xl shadow-sm">
+                                <h4 class="font-semibold mb-2">Avaliações</h4>
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="text-2xl">⭐</span>
+                                    <span class="text-xl font-bold">${business.rating}</span>
+                                    <span class="text-gray-500 text-sm">(${business.followers} avaliações)</span>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm w-8">5⭐</span>
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">85%</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm w-8">4⭐</span>
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 12%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">12%</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm w-8">3⭐</span>
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-400 h-2 rounded-full" style="width: 3%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-500">3%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('business-profile-content').innerHTML = content;
+            document.getElementById('business-profile-modal').classList.remove('hidden');
+        }
+
+        function followBusiness(businessId) {
+            const button = event.target;
+            const isFollowing = button.textContent.includes('Seguindo');
+            
+            if (isFollowing) {
+                button.innerHTML = '➕ Seguir';
+                button.style.backgroundColor = '#F3F4F6';
+            } else {
+                button.innerHTML = '✓ Seguindo';
+                button.style.backgroundColor = '#10B981';
+                button.style.color = 'white';
+            }
+        }
+
+        function shareBusiness(businessId) {
+            const button = event.target;
+            button.style.transform = 'scale(1.1)';
+            setTimeout(() => button.style.transform = 'scale(1)', 200);
+            alert('Perfil compartilhado! 📤');
+        }
+
+        function saveBusiness(businessId) {
+            const button = event.target;
+            const isSaved = button.textContent.includes('Salvo');
+            
+            if (isSaved) {
+                button.innerHTML = '🔖 Salvar';
+                button.style.backgroundColor = '#F3F4F6';
+                button.style.color = '#374151';
+            } else {
+                button.innerHTML = '✓ Salvo';
+                button.style.backgroundColor = '#F59E0B';
+                button.style.color = 'white';
+            }
+        }
+
+        function fazerCheckin(empresaId) {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '✅ Check-in realizado!';
+            button.style.backgroundColor = '#10B981';
+            button.style.color = 'white';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.backgroundColor = '';
+                button.style.color = '';
+            }, 2000);
+        }
+
+        function closeBusinessProfile() {
+            document.getElementById('business-profile-modal').classList.add('hidden');
+        }
+
+        function openContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+        }
+
+        function addComment() {
+            const input = document.getElementById('comment-input');
+            const commentText = input.value.trim();
+            
+            if (commentText === '') {
+                return;
+            }
+            
+            const commentsContainer = document.querySelector('#comments-modal .space-y-4');
+            const newComment = document.createElement('div');
+            newComment.className = 'flex space-x-3 fade-in';
+            newComment.innerHTML = `
+                <div class="w-8 h-8 bg-gradient-to-r from-tappy-blue to-tappy-gold rounded-full"></div>
+                <div class="flex-1">
+                    <p class="font-semibold text-sm">Você</p>
+                    <p class="text-gray-600 text-sm">${commentText}</p>
+                </div>
+            `;
+            
+            commentsContainer.appendChild(newComment);
+            input.value = '';
+            
+            const modalTitle = document.querySelector('#comments-modal h3');
+            const currentCount = commentsContainer.children.length;
+            modalTitle.textContent = `Comentários (${currentCount})`;
+            
+            const commentButtons = document.querySelectorAll('.tab-content:not(.hidden) button[onclick="openComments()"]');
+            commentButtons.forEach(button => {
+                const countSpan = button.querySelector('span:last-child');
+                if (countSpan) {
+                    const count = parseInt(countSpan.textContent);
+                    countSpan.textContent = count + 1;
+                }
             });
             
-            event.target.closest('.tab-btn').classList.remove('text-gray-400');
-            event.target.closest('.tab-btn').classList.add('text-tappy-blue');
+            commentsContainer.scrollTop = commentsContainer.scrollHeight;
+        }
+
+        // Sistema de notificações
+        function toggleNotifications() {
+            const panel = document.getElementById('notifications-panel');
+            const isHidden = panel.classList.contains('hidden');
+            
+            if (isHidden) {
+                panel.classList.remove('hidden');
+                loadNotifications();
+                document.getElementById('notification-icon').textContent = '🔔';
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+
+        function loadNotifications() {
+            const notificationsList = document.getElementById('notifications-list');
+            const unreadCount = notificationsData.filter(n => !n.read).length;
+            
+            const badge = document.getElementById('notification-badge');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            
+            notificationsList.innerHTML = notificationsData.map(notification => `
+                <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer ${!notification.read ? 'bg-blue-50' : ''}" 
+                     onclick="handleNotificationClick(${notification.id})">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-lg bg-gray-100">
+                            ${notification.icon}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <p class="font-semibold text-sm text-gray-900 truncate">${notification.title}</p>
+                                <span class="text-xs text-gray-500">${notification.time}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">${notification.message}</p>
+                            ${notification.action ? `<button class="text-xs text-tappy-blue font-semibold mt-2 hover:text-blue-600 transition-colors">${notification.action}</button>` : ''}
+                        </div>
+                        ${!notification.read ? '<div class="w-2 h-2 bg-tappy-blue rounded-full"></div>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleNotificationClick(notificationId) {
+            const notification = notificationsData.find(n => n.id === notificationId);
+            if (!notification) return;
+            
+            notification.read = true;
+            
+            switch(notification.type) {
+                case 'new_video':
+                    toggleNotifications();
+                    showTab('feed');
+                    break;
+                case 'promotion':
+                    toggleNotifications();
+                    showTab('map');
+                    break;
+                case 'social':
+                    toggleNotifications();
+                    showTab('profile');
+                    break;
+            }
+            
+            loadNotifications();
+        }
+
+        function markAllAsRead() {
+            notificationsData.forEach(notification => {
+                notification.read = true;
+            });
+            loadNotifications();
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Marcadas como lidas';
+            button.style.color = '#10B981';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.color = '';
+            }, 2000);
+        }
+
+        function openNotificationSettings() {
+            document.getElementById('notification-settings-modal').classList.remove('hidden');
+            toggleNotifications();
+        }
+
+        function closeNotificationSettings() {
+            document.getElementById('notification-settings-modal').classList.add('hidden');
+        }
+
+        // Funções para as abas do perfil empresarial
+        function switchBusinessTab(tabName, businessId) {
+            // Alternar conteúdo das abas
+            const videoTab = document.getElementById('business-videos-tab');
+            const infoTab = document.getElementById('business-info-tab');
+            
+            if (tabName === 'videos') {
+                videoTab.classList.remove('hidden');
+                infoTab.classList.add('hidden');
+            } else {
+                videoTab.classList.add('hidden');
+                infoTab.classList.remove('hidden');
+            }
+            
+            // Alternar estilo dos botões
+            const buttons = document.querySelectorAll('.business-tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-tappy-blue', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-600');
+            });
+            
+            event.target.classList.remove('bg-gray-200', 'text-gray-600');
+            event.target.classList.add('bg-tappy-blue', 'text-white');
+        }
+
+        function playBusinessVideo(businessId, videoIndex) {
+            const business = businessData.find(b => b.id === businessId);
+            if (!business || !business.videos[videoIndex]) return;
+            
+            const video = business.videos[videoIndex];
+            
+            // Animação de clique
+            const videoElement = event.target.closest('.aspect-square');
+            videoElement.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                videoElement.style.transform = 'scale(1)';
+                
+                // Simular reprodução do vídeo
+                alert(`🎬 Reproduzindo: "${video.title}"\n❤️ ${video.likes} curtidas • ${video.time}`);
+            }, 150);
         }
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            // Simular autoplay dos vídeos quando entram na tela
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const playBtn = entry.target.querySelector('.play-btn');
-                        if (playBtn && playBtn.textContent === '▶') {
-                            setTimeout(() => {
-                                playBtn.textContent = '⏸';
-                                entry.target.style.background = 'linear-gradient(135deg, #1E90FF, #FFD700)';
-                            }, 500);
-                        }
+            loadNotifications();
+            
+            // Permitir enviar comentário com Enter
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && document.getElementById('comments-modal').classList.contains('hidden') === false) {
+                    const input = document.getElementById('comment-input');
+                    if (document.activeElement === input) {
+                        addComment();
                     }
-                });
-            });
-
-            document.querySelectorAll('.video-container').forEach(container => {
-                observer.observe(container);
+                }
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'975c97b424f26d64',t:'MTc1NjMwODQ0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'975cf05d47eb5cb6',t:'MTc1NjMxMjA3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
